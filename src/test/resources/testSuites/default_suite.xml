@@ -1,0 +1,10 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Smoke Tests">
+
+    <test name="Pitaya UT">
+        <packages>
+            <package name="com.osvalda.pitaya.test.modelTest.*"/>
+            <package name="com.osvalda.pitaya.test.utililtyTest.*"/>
+        </packages>
+    </test>
+</suite>

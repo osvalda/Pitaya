@@ -4,6 +4,18 @@
 # Log file
 *.log
 
+# Gradle
+.gradle
+build
+
+# Cache of project
+.gradletasknamecache
+
+# Idea
+.idea
+out
+target
+
 # BlueJ files
 *.ctxt
 

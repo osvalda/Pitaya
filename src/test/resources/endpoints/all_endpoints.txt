@@ -1,0 +1,17 @@
+GET /posts, Posts
+GET /posts/{post_id}, Posts
+GET /posts/{user_id}, Posts
+POST /posts, Posts
+PUT /posts/{post_id}, Posts
+PATCH /posts/{post_id}, Posts
+DELETE /posts/{post_id}, Posts
+
+GET /posts/{post_id}/comments, Comments
+GET /comments/{post_id}, Comments
+
+GET /posts/{post_id}/pics, Pictures
+GET /posts/pics, Pictures
+PUT /posts/pics, Pictures
+POST /posts/pics, Pictures
+
+PUT /getter/point, Test
