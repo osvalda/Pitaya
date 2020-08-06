@@ -8,4 +8,4 @@ before_install:
 jdk:
   - oraclejdk8
 
-script: ./gradlew clear build -i
+script: ./gradlew clean build -i
