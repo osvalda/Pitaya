@@ -39,7 +39,7 @@ public class EndpointCoverageReporter implements IReporter {
     private Map<String, AreaWiseCoverageObject> areaWiseCoverages = new HashMap<>();
 
     /**
-     * Generate an API coverage report for the given suites into the specified output directory.
+     * Generate an API coverage report for the given suites.
      *
      * The created file is PitayaReport.html
      */
@@ -48,8 +48,8 @@ public class EndpointCoverageReporter implements IReporter {
         Configuration cfg = getTemplateConfiguration();
         
         String appName = getStringProperty("application.name", true);
-        String footer = getStringProperty("report.footer", false);
         String endpointList = getStringProperty("endpoint.list.input", true);
+        String footer = getStringProperty("report.footer", false);
 
         String dateAndTime = LocalDateTime.now().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM));
 
@@ -98,6 +98,9 @@ public class EndpointCoverageReporter implements IReporter {
                     .getResource(endpointList)))
                     .getPath());
 
+            if (FileUtils.sizeOf(file) == 0) {
+                throw new IllegalStateException("The endpoint input file is empty!");
+            }
             FileUtils.readLines(file, StandardCharsets.UTF_8).forEach(fileLine -> {
                 if(!fileLine.isEmpty()) {
                     String[] endpointLine = StringUtils.splitByWholeSeparator(fileLine, ", ");
@@ -106,9 +109,11 @@ public class EndpointCoverageReporter implements IReporter {
                     }
                 }
             });
+            if (coverages.isEmpty()) {
+                throw new IllegalStateException("The endpoint input file has wrong formatting!");
+            }
         } catch (IOException | NullPointerException e) {
-            log.error("Open the endpoint input list file ({}) has failed!", endpointList);
-            throw new IllegalStateException(e.getMessage(), e);
+            throw new IllegalStateException("Opening the endpoint input list file (" + endpointList + ") has failed!", e);
         }
     }
 

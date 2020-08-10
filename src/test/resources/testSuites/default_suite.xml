@@ -5,6 +5,7 @@
         <packages>
             <package name="com.osvalda.pitaya.test.modelTest.*"/>
             <package name="com.osvalda.pitaya.test.utililtyTest.*"/>
+            <package name="com.osvalda.pitaya.test.reportTest.*"/>
         </packages>
     </test>
 </suite>
