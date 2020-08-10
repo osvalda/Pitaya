@@ -1,0 +1,1 @@
+A wrong input file produces empty coverage map

@@ -10,19 +10,24 @@ public class UtilityTests {
 
     @Test
     public void testMissingMandatoryField() {
-        assertThatThrownBy(() -> {
-            getStringProperty("fake", true);
-        }).hasMessage("fake config field is mandatory!");
+        assertThatThrownBy(() -> { getStringProperty("fake", true); })
+                .hasMessage("fake config field is mandatory!")
+                .isInstanceOf(IllegalStateException.class);
     }
 
     @Test
-    public void testMandatoryField() {
+    public void testExistingMandatoryField() {
         assertThat(getStringProperty("application.name", true)).isEqualTo("Pitaya");
     }
 
     @Test
-    public void testNotMandatoryField() {
-        assertThat(getStringProperty("fake", false)).isEqualTo("");
+    public void testExistingNotMandatoryField() {
+        assertThat(getStringProperty("application.name", false)).isEqualTo("Pitaya");
+    }
+
+    @Test
+    public void testMissingNotMandatoryField() {
+        assertThat(getStringProperty("fake", false)).isEmpty();
     }
 
 }

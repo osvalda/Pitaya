@@ -14,8 +14,6 @@ repositories {
 test {
     useTestNG() {
         suites 'src/test/resources/testSuites/default_suite.xml'
-        parallel 'classes'
-        threadCount 3
     }
 }
 
@@ -33,4 +31,5 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.6'
 
     testCompile group: 'org.assertj', name: 'assertj-core', version: '3.16.1'
+    testCompile "org.jmockit:jmockit:1.41"
 }
