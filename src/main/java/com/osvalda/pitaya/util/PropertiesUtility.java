@@ -1,6 +1,5 @@
 package com.osvalda.pitaya.util;
 
-import com.osvalda.pitaya.EndpointCoverageReporter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
@@ -25,7 +24,7 @@ public class PropertiesUtility {
         log.info("Open properties file: {}", filePath);
         try {
             Properties prop = new Properties();
-            prop.load(EndpointCoverageReporter.class.getClassLoader().getResourceAsStream(filePath));
+            prop.load(PropertiesUtility.class.getClassLoader().getResourceAsStream(filePath));
             return prop;
         } catch (IOException | NullPointerException e) {
             log.error(e.getLocalizedMessage());

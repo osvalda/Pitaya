@@ -306,7 +306,7 @@ h3 {
                         <#assign status = '<div class="col col-4 skipped test-case-list">SKIPPED</div>'>
                     </#if>
                         <div style="display:flex">
-                            <div class="col col-test-case-name test-case-list" data-label="Tests">${test.getMethod().getConstructorOrMethod().getMethod()}</div>
+                            <div class="col col-test-case-name test-case-list" data-label="Tests">${test.getName()}</div>
                             ${status}
                         </div>
                     </#list>

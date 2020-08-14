@@ -5,7 +5,7 @@
 
 API coverage visualizer tool. Creates an easily readable html report based upon the executed API test cases.
 
-> Currently [TestNG] is the only supported framework
+> Currently [TestNG] and [JUnit5] are the only supported frameworks
 
 ## Usage
 ### Dependency
@@ -53,7 +53,9 @@ add the following properties to it:
 
 ### Test case modifications
 
-To use Pitaya in tests add the reporter to the listeners:
+#### TestNG
+
+To use Pitaya with TestNG add the reporter to the listeners in your test class(es):
 ```java
 @Listeners({EndpointCoverageReporter.class})
 public class YourTestClass {
@@ -61,7 +63,19 @@ public class YourTestClass {
 }
 ```
 
-And annotate all your test methods which you want to include in the report:
+#### JUnit 5
+
+To use Pitaya with JUnit5  add the extension to the extensions in your test class(es):
+```java
+@ExtendWith(PitayaCoverageExtension.class)
+public class JUnitReportTest {
+    // ...
+}
+```
+
+#### In Test Methods
+
+Annotate all your test methods which you want to include in the report:
 ```java
 @Test
 @TestCaseSupplementary(api = {GET + "/one_of_your_endpoint"})
@@ -87,3 +101,4 @@ The following tools are used across the project.
 
 
 [TestNG]: <https://testng.org/doc/>
+[JUnit5]: <https://junit.org/junit5/>

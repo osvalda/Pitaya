@@ -1,6 +1,6 @@
 package com.osvalda.pitaya.test.reportTest;
 
-import com.osvalda.pitaya.EndpointCoverageReporter;
+import com.osvalda.pitaya.PitayaCoverageReporter;
 import com.osvalda.pitaya.util.PropertiesUtility;
 import mockit.Mock;
 import mockit.MockUp;
@@ -22,7 +22,7 @@ public class ReportTests {
                 return "fake_value";
             }
         };
-        EndpointCoverageReporter sut = new EndpointCoverageReporter();
+        PitayaCoverageReporter sut = new PitayaCoverageReporter();
         assertThatThrownBy(() -> { sut.generateReport(new ArrayList<>(), null, ""); })
                 .hasMessage("Opening the endpoint input list file (fake_value) has failed!")
                 .isInstanceOf(IllegalStateException.class);
@@ -36,7 +36,7 @@ public class ReportTests {
                 return "endpoints/all_endpoints_corrupted.txt";
             }
         };
-        EndpointCoverageReporter sut = new EndpointCoverageReporter();
+        PitayaCoverageReporter sut = new PitayaCoverageReporter();
         assertThatThrownBy(() -> { sut.generateReport(new ArrayList<>(), new ArrayList<>(), ""); })
                 .hasMessage("The endpoint input file has wrong formatting!")
                 .isInstanceOf(IllegalStateException.class);
@@ -50,7 +50,7 @@ public class ReportTests {
                 return "endpoints/all_endpoints_empty.txt";
             }
         };
-        EndpointCoverageReporter sut = new EndpointCoverageReporter();
+        PitayaCoverageReporter sut = new PitayaCoverageReporter();
         assertThatThrownBy(() -> { sut.generateReport(new ArrayList<>(), new ArrayList<>(), ""); })
                 .hasMessage("The endpoint input file is empty!")
                 .isInstanceOf(IllegalStateException.class);
@@ -58,7 +58,7 @@ public class ReportTests {
 
     @Test
     public void testReportCreationWithEmptySuite() {
-        EndpointCoverageReporter sut = new EndpointCoverageReporter();
+        PitayaCoverageReporter sut = new PitayaCoverageReporter();
         sut.generateReport(new ArrayList<>(), new ArrayList<>(), "");
         assertThat(new File("PitayaReport.html")).exists().isFile().isRelative();
     }

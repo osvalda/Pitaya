@@ -1,13 +1,13 @@
-import com.osvalda.pitaya.EndpointCoverageReporter;
+import com.osvalda.pitaya.PitayaCoverageExtension;
 import com.osvalda.pitaya.annotation.TestCaseSupplementary;
-import org.testng.SkipException;
-import org.testng.annotations.Listeners;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import static com.osvalda.pitaya.util.Methods.*;
 
-@Listeners({EndpointCoverageReporter.class})
-public class ReportTests {
+@ExtendWith(PitayaCoverageExtension.class)
+public class JUnitReportTest {
 
     @Test
     @TestCaseSupplementary(api = {GET + "/posts", POST + "/fake"})
@@ -22,9 +22,10 @@ public class ReportTests {
     }
 
     @Test
+    @Disabled
     @TestCaseSupplementary(api = {GET + "/posts"})
     public void testSkipped() {
-        throw new SkipException("message");
+
     }
 
     @Test
@@ -38,4 +39,6 @@ public class ReportTests {
     public void testFive() {
 
     }
+
+
 }
