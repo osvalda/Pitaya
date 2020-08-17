@@ -8,4 +8,8 @@ before_install:
 jdk:
   - oraclejdk8
 
-script: ./gradlew clean build -i
+script:
+  - ./gradlew clean build -i
+
+after_success:
+  - ./gradlew jacocoTestReport coveralls

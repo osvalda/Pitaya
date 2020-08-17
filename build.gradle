@@ -1,5 +1,7 @@
 plugins {
     id 'java'
+    id 'jacoco'
+    id 'com.github.kt3k.coveralls' version '2.8.4'
 }
 
 group 'com.osvalda.pitaya'
@@ -20,6 +22,13 @@ test {
 task jUnitTest(type: Test) {
     useJUnitPlatform() {
         includeEngines 'junit-jupiter'
+    }
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled = true
+        html.enabled = true
     }
 }
 
