@@ -19,6 +19,14 @@ import java.util.Optional;
 
 import static com.osvalda.pitaya.util.PropertiesUtility.getStringProperty;
 
+/**
+ * API coverage report JUnit5 extension. Collects the covered endpoints from the executed test cases
+ * and visualize the result in a static HTML file.
+ *
+ * @see <a href="https://github.com/osvalda/Pitaya">Pitaya documentation</a>
+ *
+ * @author Akos Osvald
+ */
 @Slf4j
 public class PitayaCoverageExtension implements TestWatcher, AfterAllCallback {
 

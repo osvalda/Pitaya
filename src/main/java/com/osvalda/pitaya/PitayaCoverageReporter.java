@@ -26,7 +26,7 @@ import java.util.stream.Stream;
 import static com.osvalda.pitaya.util.PropertiesUtility.getStringProperty;
 
 /**
- * API coverage reporter. Collects all the covered endpoints from the suite
+ * API coverage TestNG reporter. Collects all the covered endpoints from the suite
  * and visualize the result in a static HTML file.
  *
  * @see <a href="https://github.com/osvalda/Pitaya">Pitaya documentation</a>

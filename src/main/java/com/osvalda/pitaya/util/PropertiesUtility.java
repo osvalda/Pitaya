@@ -17,6 +17,25 @@ public class PropertiesUtility {
 
     static Properties reportConfig;
 
+    /**
+     * Returns a string value which belongs to the given key in Pitaya configuration.
+     *
+     * @param key key of the requested property
+     * @param mandatory marks whether the property is mandatory or not
+     * @return the value pair of the given key or default empty string
+     *
+     * @author Akos Osvald
+     */
+    public static String getStringProperty(String key, boolean mandatory) {
+        if (reportConfig == null) {
+            reportConfig = getPropertiesFile();
+        }
+        if(mandatory && !reportConfig.stringPropertyNames().contains(key)) {
+            throw new IllegalStateException(key + " config field is mandatory!");
+        }
+        return reportConfig.getProperty(key, "");
+    }
+
     private static Properties getPropertiesFile() {
         String filePath = "pitaya.properties";
         log.info("Open properties file: {}", filePath);
@@ -28,25 +47,6 @@ public class PropertiesUtility {
             log.error(e.getLocalizedMessage());
             throw new VerifyError("The " + filePath + " file is corrupted or missing!");
         }
-    }
-
-    /**
-     * Returns a string value which belongs to the given key in Pitaya configuration.
-     *
-     * @param key key of the requested property
-     * @param mandatory marks whether the property is mandatory or not
-     * @return the value pair of the given key or default empty string
-     *
-     * @author Akos OSvald
-     */
-    public static String getStringProperty(String key, boolean mandatory) {
-        if (reportConfig == null) {
-            reportConfig = getPropertiesFile();
-        }
-        if(mandatory && !reportConfig.stringPropertyNames().contains(key)) {
-            throw new IllegalStateException(key + " config field is mandatory!");
-        }
-        return reportConfig.getProperty(key, "");
     }
 
 }
