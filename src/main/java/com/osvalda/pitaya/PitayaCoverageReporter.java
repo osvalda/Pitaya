@@ -85,8 +85,8 @@ public class PitayaCoverageReporter implements IReporter {
         suites.forEach(e -> e.getResults().entrySet().forEach(this::processTestSuiteResult));
     }
 
-    private void processTestSuiteResult(Map.Entry<String, ISuiteResult> stringISuiteResultEntry) {
-            ITestContext testContext = stringISuiteResultEntry.getValue().getTestContext();
+    private void processTestSuiteResult(Map.Entry<String, ISuiteResult> suiteResultEntry) {
+            ITestContext testContext = suiteResultEntry.getValue().getTestContext();
 
             Set<ITestResult> failedTests
                     = testContext.getFailedTests().getAllResults();

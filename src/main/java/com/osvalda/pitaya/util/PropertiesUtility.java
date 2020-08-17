@@ -1,5 +1,6 @@
 package com.osvalda.pitaya.util;
 
+import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
@@ -11,13 +12,10 @@ import java.util.Properties;
  * @author Akos Osvald
  */
 @Slf4j
+@UtilityClass
 public class PropertiesUtility {
 
     static Properties reportConfig;
-
-    private PropertiesUtility() {
-        throw new IllegalStateException("This is a utility class!");
-    }
 
     private static Properties getPropertiesFile() {
         String filePath = "pitaya.properties";
@@ -28,7 +26,7 @@ public class PropertiesUtility {
             return prop;
         } catch (IOException | NullPointerException e) {
             log.error(e.getLocalizedMessage());
-            throw new VerifyError("The ".concat(filePath).concat(" file is corrupted or missing!"));
+            throw new VerifyError("The " + filePath + " file is corrupted or missing!");
         }
     }
 

@@ -2,17 +2,15 @@ package com.osvalda.pitaya.util;
 
 import com.osvalda.pitaya.models.AreaWiseCoverageObject;
 import com.osvalda.pitaya.models.CoverageObject;
+import lombok.experimental.UtilityClass;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@UtilityClass
 public class PitayaMapArrangeUtility {
-
-    private PitayaMapArrangeUtility() {
-        throw new IllegalStateException("This is a utility class!");
-    }
 
     public static Map<String, List<CoverageObject>> arrangeEndpointsByAreas(Map<String, CoverageObject> coverages) {
         Map<String, List<CoverageObject>> areaWiseEndpointMap = new HashMap<>();

@@ -3,14 +3,12 @@ package com.osvalda.pitaya.util;
 import freemarker.template.Configuration;
 import freemarker.template.TemplateExceptionHandler;
 import freemarker.template.Version;
+import lombok.experimental.UtilityClass;
 
 import java.util.Locale;
 
+@UtilityClass
 public class TemplateConfigurationProvider {
-
-    private TemplateConfigurationProvider() {
-        throw new IllegalStateException("This is a utility class!");
-    }
 
     public static Configuration getTemplateConfiguration() {
         Configuration cfg = new Configuration(new Version(2, 3, 20));

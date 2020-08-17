@@ -6,7 +6,7 @@ import static com.osvalda.pitaya.util.PropertiesUtility.getStringProperty;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-public class UtilityTests {
+public class PropertiesUtilityTests {
 
     @Test
     public void testMissingMandatoryField() {

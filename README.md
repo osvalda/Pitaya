@@ -1,6 +1,7 @@
 # Pitaya
 
 [![Build Status](https://travis-ci.org/osvalda/Pitaya.svg?branch=master)](https://travis-ci.org/osvalda/Pitaya)
+[![Coverage Status](https://coveralls.io/repos/github/osvalda/Pitaya/badge.svg?branch=master)](https://coveralls.io/github/osvalda/Pitaya?branch=PAC-002)
 [![GitHub license](https://img.shields.io/github/license/spotify/scio.svg)](./LICENSE)
 
 API coverage visualizer tool. Creates an easily readable html report based upon the executed API test cases.
@@ -57,8 +58,8 @@ add the following properties to it:
 
 To use Pitaya with TestNG add the reporter to the listeners in your test class(es):
 ```java
-@Listeners({EndpointCoverageReporter.class})
-public class YourTestClass {
+@Listeners({PitayaCoverageReporter.class})
+public class YourTestNGTestClass {
     // ...
 }
 ```
@@ -68,7 +69,7 @@ public class YourTestClass {
 To use Pitaya with JUnit5  add the extension to the extensions in your test class(es):
 ```java
 @ExtendWith(PitayaCoverageExtension.class)
-public class JUnitReportTest {
+public class YourJUnit5TestClass {
     // ...
 }
 ```
@@ -90,14 +91,18 @@ The following tools are used across the project.
 | Name | Version |
 | ------ | ------ |
 | testng | 7.0.0 |
+| junit.jupiter | 5.6.2 |
+| junit.platform | 1.6.2 |
 | freemarker | 2.3.29 |
-| lombok |1.18.6|
+| lombok |1.18.12|
 | assertj-core | 3.14.0 |
 | apache.commons | 3.8.1 |
 | commons-io | 2.6 |
-| slf4j | 1.7.26 |
+| guava | 11.0.2 |
+| slf4j | 1.7.30 |
 | logback | 1.2.3 |
 | jmockit | 1.41 |
+| mockito | 2.15.0 |
 
 
 [TestNG]: <https://testng.org/doc/>
