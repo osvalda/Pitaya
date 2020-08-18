@@ -22,6 +22,12 @@ import java.util.Map;
 
 import static com.osvalda.pitaya.util.PropertiesUtility.getStringProperty;
 
+/**
+ * Closeable resource which invoke close method only once, at the end of test executions.
+ * This class is responsible for the actual html report generation.
+ *
+ * @author Akos Osvald
+ */
 @Slf4j
 public class JUnitReporterResource implements ExtensionContext.Store.CloseableResource {
 
@@ -31,6 +37,12 @@ public class JUnitReporterResource implements ExtensionContext.Store.CloseableRe
         this.coverages = coverages;
     }
 
+    /**
+     * Html report generator method which Invoked only once.
+     * It uses freemarker for html creation.
+     *
+     * The output is PitayaReport.html file.
+     */
     @Override
     public void close() {
         String appName = getStringProperty(PitayaPropertyKeys.APPLICATION_NAME_PROPERTY, true);

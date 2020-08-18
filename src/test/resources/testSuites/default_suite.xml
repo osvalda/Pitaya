@@ -6,6 +6,7 @@
             <package name="com.osvalda.pitaya.test.modelTest.*"/>
             <package name="com.osvalda.pitaya.test.utililtyTest.*"/>
             <package name="com.osvalda.pitaya.test.reportTest.*"/>
+            <package name="com.osvalda.pitaya.test.endpointlistTest.*"/>
         </packages>
     </test>
 </suite>

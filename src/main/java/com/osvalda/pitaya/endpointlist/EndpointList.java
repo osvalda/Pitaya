@@ -6,6 +6,6 @@ import java.util.Map;
 
 public interface EndpointList {
 
-    public Map<String, CoverageObject> processEndpointListFile(String fileName);
+    Map<String, CoverageObject> processEndpointListFile(String fileName);
 
 }

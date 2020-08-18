@@ -20,7 +20,7 @@ public class PitayaMapArrangeUtilityTests {
     private Map<String, CoverageObject> coverages;
 
     @Test
-    public void testCollectEndpointsEmptyMapReturnsEmptyMap2() {
+    public void testCollectEndpointsEmptyMapReturnsEmptyMap() {
         assertThat(collectAreaWiseEndpointDetails(Collections.emptyMap())).isEqualTo(Collections.emptyMap());
     }
 
@@ -36,7 +36,7 @@ public class PitayaMapArrangeUtilityTests {
     }
 
     @Test
-    public void testCollectEndpointsArrangeEndpointsOneValueMaps2() {
+    public void testCollectEndpointsArrangeEndpointsMultipleValueMaps() {
         CoverageObject endpoint1 = new CoverageObject("area1", "GET /temp/temp");
         CoverageObject endpoint2 = new CoverageObject("area2", "PUT /temp/temp");
         CoverageObject endpoint3 = new CoverageObject("area2", "PUT /temp/test");

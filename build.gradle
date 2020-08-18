@@ -34,8 +34,8 @@ jacocoTestReport {
     afterEvaluate {
         classDirectories.setFrom(files(classDirectories.files.collect {
             fileTree(dir: it,
-                    exclude: ['**/Methods.java',
-                              '**/PitayaPropertyKeys.java'
+                    exclude: ['com/osvalda/pitaya/util/Methods**',
+                            'com/osvalda/pitaya/util/PitayaPropertyKeys**'
                     ])
         }))
     }
