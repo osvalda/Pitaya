@@ -4,6 +4,7 @@ import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
+import java.util.Optional;
 import java.util.Properties;
 
 /**
@@ -27,10 +28,8 @@ public class PropertiesUtility {
      * @author Akos Osvald
      */
     public static String getStringProperty(String key, boolean mandatory) {
-        if (reportConfig == null) {
-            reportConfig = getPropertiesFile();
-        }
-        if(mandatory && !reportConfig.stringPropertyNames().contains(key)) {
+        reportConfig=Optional.ofNullable(reportConfig).orElseGet(PropertiesUtility::getPropertiesFile);
+        if(mandatory && !reportConfig.containsKey(key)) {
             throw new IllegalStateException(key + " config field is mandatory!");
         }
         return reportConfig.getProperty(key, "");
