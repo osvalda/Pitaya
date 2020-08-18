@@ -23,6 +23,7 @@ import java.time.format.FormatStyle;
 import java.util.*;
 import java.util.stream.Stream;
 
+import static com.osvalda.pitaya.util.PitayaMapArrangeUtility.countCoveredEndpoints;
 import static com.osvalda.pitaya.util.PropertiesUtility.getStringProperty;
 
 /**
@@ -62,7 +63,7 @@ public class PitayaCoverageReporter implements IReporter {
         templateInput.put("areaWiseEndpoints", PitayaMapArrangeUtility.collectAreaWiseEndpointDetails(coverages));
         templateInput.put("endpointCoverage", PitayaMapArrangeUtility.arrangeEndpointsByAreas(coverages));
         templateInput.put("allEndpointsNumber", coverages.keySet().size());
-        templateInput.put("coveredEndpointsNumber", countCoveredEndpoints());
+        templateInput.put("coveredEndpointsNumber", countCoveredEndpoints(coverages));
         templateInput.put("areaNumber", PitayaMapArrangeUtility.arrangeEndpointsByAreas(coverages).keySet().size());
         templateInput.put("currentDateAndTime", dateAndTime);
         templateInput.put("appName", appName);
@@ -107,10 +108,6 @@ public class PitayaCoverageReporter implements IReporter {
                 }
             });
         }
-    }
-
-    private int countCoveredEndpoints() {
-        return Math.toIntExact(coverages.values().stream().filter(endpoint -> !endpoint.getTestCases().isEmpty()).count());
     }
 
 }

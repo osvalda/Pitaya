@@ -54,4 +54,14 @@ public class PitayaMapArrangeUtility {
         });
         return areaWiseCoverages;
     }
+
+    /**
+     * Counts the endpoints with at least one test case.
+     *
+     * @param coverages the initial coverage map
+     * @return the number of endpoints with at least one corresponding test case
+     */
+    public static int countCoveredEndpoints(Map<String, CoverageObject> coverages) {
+        return Math.toIntExact(coverages.values().stream().filter(endpoint -> !endpoint.getTestCases().isEmpty()).count());
+    }
 }

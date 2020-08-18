@@ -11,8 +11,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import static com.osvalda.pitaya.util.PitayaMapArrangeUtility.arrangeEndpointsByAreas;
-import static com.osvalda.pitaya.util.PitayaMapArrangeUtility.collectAreaWiseEndpointDetails;
+import static com.osvalda.pitaya.util.PitayaMapArrangeUtility.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class PitayaMapArrangeUtilityTests {
@@ -76,5 +75,28 @@ public class PitayaMapArrangeUtilityTests {
                 ImmutableMap.of("area1", ImmutableList.of(endpoint1, endpoint2), "area2", ImmutableList.of(endpoint3));
 
         assertThat(arrangeEndpointsByAreas(coverages)).isEqualTo(expectedOutput);
+    }
+
+    @Test
+    public void testCoveredEndpointCountWithoutTestCase() {
+        CoverageObject endpoint1 = new CoverageObject("area1", "GET /temp/temp");
+        CoverageObject endpoint2 = new CoverageObject("area1", "PUT /temp/temp");
+        CoverageObject endpoint3 = new CoverageObject("area2", "GET /temp/test");
+        coverages = ImmutableMap.of("test", endpoint1, "test2", endpoint2, "test3", endpoint3);
+
+        assertThat(countCoveredEndpoints(coverages)).isZero();
+    }
+
+    @Test
+    public void testCoveredEndpointCountWithTestCase() {
+        CoverageObject endpoint1 = new CoverageObject("area1", "GET /temp/temp");
+        endpoint1.addTestCaseToEndpoint(TestResult.newEmptyTestResult());
+        CoverageObject endpoint2 = new CoverageObject("area1", "PUT /temp/temp");
+        CoverageObject endpoint3 = new CoverageObject("area2", "GET /temp/test");
+        endpoint3.addTestCaseToEndpoint(TestResult.newEmptyTestResult());
+        endpoint3.addTestCaseToEndpoint(TestResult.newEmptyTestResult());
+        coverages = ImmutableMap.of("test", endpoint1, "test2", endpoint2, "test3", endpoint3);
+
+        assertThat(countCoveredEndpoints(coverages)).isEqualTo(2);
     }
 }
