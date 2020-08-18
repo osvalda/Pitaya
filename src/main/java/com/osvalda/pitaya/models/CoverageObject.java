@@ -26,10 +26,6 @@ public class CoverageObject {
     @Getter
     private List<ITestResult> testCases = new ArrayList<>();
 
-    private CoverageObject() {
-
-    }
-
     /**
      * Creates a new coverage object for an area's endpoint
      *

@@ -1,10 +1,13 @@
 package com.osvalda.pitaya.util;
 
+import lombok.experimental.UtilityClass;
+
 /**
  * HTTP methods string representations.
  *
  * @author Akos Osvald
  */
+@UtilityClass
 public class Methods {
 
     public static final String GET = "GET ";
@@ -13,7 +16,4 @@ public class Methods {
     public static final String POST = "POST ";
     public static final String PATCH = "PATCH ";
 
-    private Methods() {
-        throw new IllegalStateException("This is a utility class!");
-    }
 }
