@@ -4,7 +4,7 @@ plugins {
     id 'com.github.kt3k.coveralls' version '2.8.4'
 }
 
-group 'com.osvalda.pitaya'
+group 'io.github.osvalda.pitaya'
 version '1.0.0'
 
 sourceCompatibility = 1.8
@@ -34,8 +34,8 @@ jacocoTestReport {
     afterEvaluate {
         classDirectories.setFrom(files(classDirectories.files.collect {
             fileTree(dir: it,
-                    exclude: ['com/osvalda/pitaya/util/Methods**',
-                            'com/osvalda/pitaya/util/PitayaPropertyKeys**'
+                    exclude: ['io/github/osvalda/pitaya/util/Methods**',
+                            'io/github/osvalda/pitaya/util/PitayaPropertyKeys**'
                     ])
         }))
     }

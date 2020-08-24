@@ -1,10 +1,10 @@
-import com.osvalda.pitaya.PitayaCoverageReporter;
-import com.osvalda.pitaya.annotation.TestCaseSupplementary;
+import io.github.osvalda.pitaya.PitayaCoverageReporter;
+import io.github.osvalda.pitaya.annotation.TestCaseSupplementary;
 import org.testng.SkipException;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
-import static com.osvalda.pitaya.util.Methods.*;
+import static io.github.osvalda.pitaya.util.Methods.*;
 
 @Listeners({PitayaCoverageReporter.class})
 public class TestNGReportTests {

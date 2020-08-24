@@ -1,10 +1,10 @@
-import com.osvalda.pitaya.PitayaCoverageExtension;
-import com.osvalda.pitaya.annotation.TestCaseSupplementary;
+import io.github.osvalda.pitaya.PitayaCoverageExtension;
+import io.github.osvalda.pitaya.annotation.TestCaseSupplementary;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import static com.osvalda.pitaya.util.Methods.*;
+import static io.github.osvalda.pitaya.util.Methods.*;
 
 @ExtendWith(PitayaCoverageExtension.class)
 public class JUnitReportTest {

@@ -3,10 +3,10 @@
 
     <test name="Pitaya UT">
         <packages>
-            <package name="com.osvalda.pitaya.test.modelTest.*"/>
-            <package name="com.osvalda.pitaya.test.utililtyTest.*"/>
-            <package name="com.osvalda.pitaya.test.reportTest.*"/>
-            <package name="com.osvalda.pitaya.test.endpointlistTest.*"/>
+            <package name="io.github.osvalda.pitaya.test.modelTest.*"/>
+            <package name="io.github.osvalda.pitaya.test.utililtyTest.*"/>
+            <package name="io.github.osvalda.pitaya.test.reportTest.*"/>
+            <package name="io.github.osvalda.pitaya.test.endpointlistTest.*"/>
         </packages>
     </test>
 </suite>
