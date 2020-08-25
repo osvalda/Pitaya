@@ -3,10 +3,11 @@
 [![Build Status](https://travis-ci.org/osvalda/Pitaya.svg?branch=master)](https://travis-ci.org/osvalda/Pitaya)
 [![Coverage Status](https://coveralls.io/repos/github/osvalda/Pitaya/badge.svg?branch=master)](https://coveralls.io/github/osvalda/Pitaya?branch=PAC-002)
 [![GitHub license](https://img.shields.io/github/license/spotify/scio.svg)](./LICENSE)
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.osvalda/Pitaya.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.osvalda%22%20AND%20a:%22Pitaya%22)
 
 API coverage visualizer tool. Creates an easily readable html report based upon the executed API test cases.
 
-> Currently [TestNG] and [JUnit5] are the only supported frameworks
+> Currently [TestNG] and [JUnit5] are the supported frameworks
 
 ## Usage
 ### Dependency
@@ -14,7 +15,7 @@ API coverage visualizer tool. Creates an easily readable html report based upon 
 **Maven**:
 ```xml
 <dependency>
-    <groupId>com.osvalda</groupId>
+    <groupId>io.github.osvalda</groupId>
     <artifactId>Pitaya</artifactId>
     <version>1.0.0</version>
     <scope>test</scope>
@@ -25,7 +26,7 @@ API coverage visualizer tool. Creates an easily readable html report based upon 
 
 ```
 dependencies {
-    testCompile("com.osvalda:pitaya:1.0.0")
+    testCompile("io.github.osvalda:pitaya:1.0.0")
 }
 ```
 
@@ -40,17 +41,17 @@ GET /posts/{post_id}/comments, Comments
 GET /comments/{post_id}, Comments
 
 GET /posts/{post_id}/pics, Pictures
+...
 ```
 
 Create a `pitaya.properties` file into the root of your resources directory and
 add the following properties to it:
 
-| Key | Value |
-| ------ | ------ |
-| application.name | The name of your SUT |
-| endpoint.list.input | The formerly created endpoint list file's relative path |
-| report.footer | Optional footer content for the HTML report |
- 
+| Key | Value | Mandatory |
+| ------ | ------ | ------ |
+| application.name | The name of your SUT | Yes | 
+| endpoint.list.input | The formerly created endpoint list file's relative path | Yes |
+| report.footer | Footer content for the HTML report | No |
 
 ### Test case modifications
 
