@@ -32,6 +32,7 @@ dependencies {
 
 ### Configuration
 
+#### Pitaya endpoint list file
 Create a file into your resource directory and add lines in the following format:
 
 ```
@@ -44,13 +45,18 @@ GET /posts/{post_id}/pics, Pictures
 ...
 ```
 
+#### OpenAPI Version 3 file
+Copy the open api file (json or yaml) to resources directory or use its URL
+
+#### Properties file
+
 Create a `pitaya.properties` file into the root of your resources directory and
 add the following properties to it:
 
 | Key | Value | Mandatory |
 | ------ | ------ | ------ |
 | application.name | The name of your SUT | Yes | 
-| endpoint.list.input | The formerly created endpoint list file's relative path | Yes |
+| endpoint.list.input | The endpoint list file's relative path or Open API file URL| Yes |
 | report.footer | Footer content for the HTML report | No |
 
 ### Test case modifications
@@ -104,6 +110,16 @@ The following tools are used across the project.
 | logback | 1.2.3 |
 | jmockit | 1.41 |
 | mockito | 2.15.0 |
+| swagger-parser-v3 | 2.0.21 |
+
+## Examples
+
+<a href="https://i.ibb.co/PT6CKMd/pitaya-main.jpg" target="_blank">
+    <img width="210" height="247" alt="charts" src="https://i.ibb.co/PT6CKMd/pitaya-main.jpg">
+</a>
+<a href="https://i.ibb.co/FbPZwvR/pitaya-list.jpg" target="_blank">
+    <img width="233" height="247" alt="endpoint list" src="https://i.ibb.co/FbPZwvR/pitaya-list.jpg">
+</a>
 
 
 [TestNG]: <https://testng.org/doc/>
