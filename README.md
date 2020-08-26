@@ -32,7 +32,9 @@ dependencies {
 
 ### Configuration
 
-#### Pitaya endpoint list file
+#### Input file
+
+##### Pitaya endpoint list file
 Create a file into your resource directory and add lines in the following format:
 
 ```
@@ -45,7 +47,7 @@ GET /posts/{post_id}/pics, Pictures
 ...
 ```
 
-#### OpenAPI Version 3 file
+##### OpenAPI Version 3 file
 Copy the open api file (json or yaml) to resources directory or use its URL
 
 #### Properties file
