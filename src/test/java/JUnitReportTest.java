@@ -40,5 +40,11 @@ public class JUnitReportTest {
 
     }
 
+    @Test
+    @TestCaseSupplementary(api = {PUT + "/pet"})
+    public void testSix() {
+
+    }
+
 
 }
