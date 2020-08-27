@@ -35,7 +35,7 @@ dependencies {
 #### Input file
 
 ##### Pitaya endpoint list file
-Create a file into your resource directory and add lines in the following format:
+Create a text file in your resource directory and add lines in the following format:
 
 ```
 DELETE /posts/{post_id}, Posts
