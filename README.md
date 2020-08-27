@@ -123,6 +123,15 @@ The following tools are used across the project.
     <img width="233" height="247" alt="endpoint list" src="https://i.ibb.co/FbPZwvR/pitaya-list.jpg">
 </a>
 
+## CI Issues and solutions
+
+### Jenkins
+
+If Jenkins fails to display css, then run the following command in `Manage Jenkins` / `Script console`
+```batch
+System.setProperty("hudson.model.DirectoryBrowserSupport.CSP", "")
+```
+
 
 [TestNG]: <https://testng.org/doc/>
 [JUnit5]: <https://junit.org/junit5/>

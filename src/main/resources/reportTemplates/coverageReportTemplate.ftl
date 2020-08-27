@@ -6,6 +6,16 @@
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
 
+<#assign missedEndpointNum = (allEndpointsNumber - coveredEndpointsNumber)>
+<#assign coveragePercent = ((coveredEndpointsNumber / allEndpointsNumber) * 100)>
+<#if coveragePercent == 100>
+   <#assign left = '224px'>
+<#elseif coveragePercent gt 10>
+   <#assign left = '230px'>
+<#else>
+   <#assign left = '237px'>
+</#if>
+
 <style>
 body {
   font-family: 'lato', sans-serif;
@@ -99,6 +109,7 @@ h3 {
   border-radius: 0px;
   border-bottom-left-radius: 3px;
   border-bottom-right-radius: 3px;
+  background-color: rgba(1, 1, 1, 0);
   margin-top: 0px;
   border-top: 0px
 }
@@ -199,11 +210,41 @@ h3 {
     text-align: right;
   }
 }
+
+#donutchart,
+#piechart {
+  width: 550px;
+  height: 400px;
+  font-family: Arial;
+}
+
+#donutchart {
+    position: relative;
+}
+
+#labelOverlay {
+    position: absolute;
+    top: 190px;
+    left: ${left};
+    text-align: center;
+    cursor: default;
+}
+
+#labelOverlay p {
+  line-height: 0.3;
+  padding:0;
+  margin: 8px;
+}
+
+#labelOverlay p.used-size {
+  line-height: 0.5;
+  font-size: 20pt;
+  color: #8e8e8e;
+}
+
 </style>
 
 <body>
-
-<#assign missedEndpointNum = (allEndpointsNumber - coveredEndpointsNumber)>
 
 <script type="text/javascript">
     google.charts.load('current', {'packages':['corechart']});
@@ -221,7 +262,11 @@ h3 {
         'titlePosition': 'none',
         'width': 550,
         'height': 400,
-        'slices': { 1: {offset: 0.2} },
+        'pieHole': 0.75,
+        'legend': {
+        	position: 'none'
+        },
+        'pieSliceText': 'none',
         'colors': ['#49cc90', '#f93e3e']};
       var chart = new google.visualization.PieChart(document.getElementById('piechart'));
       chart.draw(data, options);
@@ -272,7 +317,12 @@ h3 {
 <h3>${currentDateAndTime}</h3>
 
 <h3 class="mid-text-style">Global Endpoint Coverage</h3>
-<div id="piechart"></div>
+<div id="donutchart" class="col-xs-12 col-sm-6 col-md-4">
+  <div id="piechart"></div>
+  <div id="labelOverlay">
+    <p class="used-size">${coveragePercent?string["##0.0"]}%</p>
+  </div>
+</div>
 
 <h3>Area-wise Endpoint Coverages</h3>
 <div id="chart_div" style="width: 900px; height: 500px;">Endpoint List</div>
