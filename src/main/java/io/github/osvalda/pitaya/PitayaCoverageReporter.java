@@ -3,6 +3,7 @@ package io.github.osvalda.pitaya;
 import io.github.osvalda.pitaya.annotation.TestCaseSupplementary;
 import io.github.osvalda.pitaya.endpointlist.EndpointList;
 import io.github.osvalda.pitaya.endpointlist.PitayaTextEndpointList;
+import io.github.osvalda.pitaya.endpointlist.SwaggerV3EndpointList;
 import io.github.osvalda.pitaya.models.CoverageObject;
 import io.github.osvalda.pitaya.util.PitayaMapArrangeUtility;
 import io.github.osvalda.pitaya.util.PitayaPropertyKeys;
@@ -55,7 +56,10 @@ public class PitayaCoverageReporter implements IReporter {
 
         Map<String, Object> templateInput = new HashMap<>();
 
-        listProcessor = new PitayaTextEndpointList();
+        if(endpointList.endsWith("txt"))
+            listProcessor = new PitayaTextEndpointList();
+        else
+            listProcessor = new SwaggerV3EndpointList();
         coverages = listProcessor.processEndpointListFile(endpointList);
 
         createTheEndpointTableInput(suites);

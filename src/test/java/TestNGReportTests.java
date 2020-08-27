@@ -38,4 +38,10 @@ public class TestNGReportTests {
     public void testFive() {
 
     }
+
+    @Test
+    @TestCaseSupplementary(api = {PATCH + "/pet"})
+    public void testSix() {
+
+    }
 }

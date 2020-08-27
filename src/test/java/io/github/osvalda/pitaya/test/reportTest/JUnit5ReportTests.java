@@ -5,6 +5,8 @@ import io.github.osvalda.pitaya.JUnitReporterResource;
 import io.github.osvalda.pitaya.PitayaCoverageExtension;
 import io.github.osvalda.pitaya.annotation.TestCaseSupplementary;
 import io.github.osvalda.pitaya.models.CoverageObject;
+import io.github.osvalda.pitaya.util.PitayaPropertyKeys;
+import io.github.osvalda.pitaya.util.PropertiesUtility;
 import mockit.Mock;
 import mockit.MockUp;
 import org.junit.jupiter.api.extension.ExtensionContext;
@@ -23,6 +25,36 @@ import static org.mockito.Mockito.*;
 public class JUnit5ReportTests {
 
     private Map<String, CoverageObject> coverages;
+
+    @Test
+    public void testAfterAllSavingWithSwaggerInput() {
+        new MockUp<PropertiesUtility>() {
+            @Mock
+            public String getStringProperty(String key, boolean mandatory) {
+                if (key.equals(PitayaPropertyKeys.ENDPOINT_LIST_PROPERTY))
+                    return "endpoints/openapi.yaml";
+                return "Pitaya test";
+            }
+        };
+        CoverageObject endpoint1 = new CoverageObject("area1", "GET /temp/temp");
+        coverages = ImmutableMap.of("test", endpoint1);
+        ExtensionContext.Store inject = mock(ExtensionContext.Store.class);
+        ExtensionContext context = mock(ExtensionContext.class);
+
+        when(context.getRoot()).thenReturn(context);
+        when(context.getStore(ExtensionContext.Namespace.GLOBAL)).thenReturn(inject);
+        when(inject.getOrComputeIfAbsent(any(), any(), any())).thenReturn(coverages);
+        doAnswer(invocation -> {
+            Object arg0 = invocation.getArgument(0);
+            Object arg1 = invocation.getArgument(1);
+
+            assertThat(arg0).isEqualTo("finalStep");
+            assertThat(arg1).isInstanceOf(JUnitReporterResource.class);
+            return null;
+        }).when(inject).put(any(), any());
+
+        new PitayaCoverageExtension().afterAll(context);
+    }
 
     @Test
     public void testAfterAllSaving() {
@@ -76,7 +108,15 @@ public class JUnit5ReportTests {
     }
 
     @Test
-    public void testAbortedTestCaseHandling() {
+    public void testAbortedTestCaseHandlingWithSwaggerInput() {
+        new MockUp<PropertiesUtility>() {
+            @Mock
+            public String getStringProperty(String key, boolean mandatory) {
+                if (key.equals(PitayaPropertyKeys.ENDPOINT_LIST_PROPERTY))
+                    return "endpoints/openapi.yaml";
+                return "Pitaya test";
+            }
+        };
         CoverageObject endpoint1 = new CoverageObject("area1", "GET /temp/temp");
         coverages = ImmutableMap.of("GET /temp/temp", endpoint1);
         ExtensionContext.Store inject = mock(ExtensionContext.Store.class);

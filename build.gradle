@@ -4,7 +4,7 @@ plugins {
     id 'com.github.kt3k.coveralls' version '2.8.4'
 }
 
-group 'io.github.osvalda.pitaya'
+group 'io.github.osvalda'
 version '1.0.0'
 
 sourceCompatibility = 1.8
@@ -52,6 +52,7 @@ dependencies {
     compile group: 'commons-io', name: 'commons-io', version: '2.6'
     compile group: 'com.google.guava', name: 'guava', version: '11.0.2'
     compile group: 'com.google.inject', name: 'guice', version: '4.2.3'
+    compile group: 'io.swagger.parser.v3', name: 'swagger-parser-v3', version: '2.0.21'
 
     compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.30'
     compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
