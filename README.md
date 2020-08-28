@@ -24,7 +24,7 @@ API coverage visualizer tool. Creates an easily readable html report based upon 
 
 **Gradle**:
 
-```
+```Groovy
 dependencies {
     testCompile("io.github.osvalda:pitaya:1.0.0")
 }
@@ -128,7 +128,7 @@ The following tools are used across the project.
 ### Jenkins
 
 If Jenkins fails to display css, then run the following command in `Manage Jenkins` / `Script console`
-```batch
+```
 System.setProperty("hudson.model.DirectoryBrowserSupport.CSP", "")
 ```
 

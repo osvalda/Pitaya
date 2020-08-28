@@ -22,7 +22,7 @@ body {
   font-size: 12px;
   line-height: 1.42857143;
   color: #333;
-  text-align: -webkit-center;
+  text-align: -webkit-left;
   background-color: #fff
 }
 
@@ -30,7 +30,7 @@ h2 {
   font-size: 26px;
   margin-top: 20px;
   margin-bottom: 0px;
-  text-align: center;
+  text-align: left;
 }
 h2 small {
   font-size: 0.5em;
@@ -38,23 +38,16 @@ h2 small {
 h3 {
   font-size: 13px;
   margin: 0px 0;
-  text-align: center;
-}
-.mid-text-style {
-  font-size: 13px;
-  margin-top: 20px;
-  text-align: center;
+  text-align: left;
 }
 .container {
   max-width: 1000px;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 10px;
+  padding-left: 90px;
   padding-right: 10px;
 }
 .footer {
   margin-top: 35px;
-  text-align: center;
+  text-align: left;
 }
 .area-title {
   display: flex;
@@ -242,9 +235,38 @@ h3 {
   color: #8e8e8e;
 }
 
-</style>
+.sidenav {
+  text-align: center;
+  height: 100%;
+  width: 70px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #343434;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
 
-<body>
+.sidenav a {
+  text-decoration: none;
+  font-size: 35px;
+  color: #818181;
+  display: block;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+  cursor: pointer;
+}
+
+.sidenav div {
+  font-size: 15px;
+  padding: 0px 0px 20px 0px;
+  color: #818181;
+}
+
+</style>
 
 <script type="text/javascript">
     google.charts.load('current', {'packages':['corechart']});
@@ -267,7 +289,7 @@ h3 {
         	position: 'none'
         },
         'pieSliceText': 'none',
-        'colors': ['#49cc90', '#f93e3e']};
+        'colors': ['#e4f8ee', '#fdb8b8']};
       var chart = new google.visualization.PieChart(document.getElementById('piechart'));
       chart.draw(data, options);
     }
@@ -286,7 +308,7 @@ h3 {
         hAxis: {title: 'Areas'},
         animation: {startup: true, easing: 'inAndOut', duration: 700},
         seriesType: 'bars',
-        colors: ['#49cc90', '#f93e3e', '#d35ebe'],
+        colors: ['#e4f8ee', '#fdb8b8', '#d35ebe'],
         series: {2: {type: 'line'}}
       };
 
@@ -294,7 +316,7 @@ h3 {
         chart.draw(data, options);
     }
 
-    function myFunction(detailId, endpointId) {
+    function openEndpointRow(detailId, endpointId) {
       var testCaseList = document.getElementById(detailId);
       var endpoint = document.getElementById(endpointId);
       if (testCaseList != null) {
@@ -309,14 +331,43 @@ h3 {
           }
       }
     }
+
+    function menuBarClick(menuItem) {
+      var charts = document.getElementById("charts");
+      var table = document.getElementById("table");
+      if (menuItem == "table") {
+          if (table != null && charts != null) {
+            charts.style.display = "none";
+            table.style.display = "block";
+            document.getElementById("tableItem").style.color = '#f1f1f1';
+            document.getElementById("homeItem").style.color = '#818181';
+          }
+      } else {
+          if (table != null && charts != null) {
+            charts.style.display = "block";
+            table.style.display = "none";
+            document.getElementById("tableItem").style.color = '#818181';
+            document.getElementById("homeItem").style.color = '#f1f1f1';
+          }
+      }
+    }
 </script>
+
+<body onload="menuBarClick('charts')"">
+
+<div class="sidenav">
+  <div>Pitaya</div>
+  <a id="homeItem" onclick="menuBarClick('charts')">&#8962</a>
+  <a id="tableItem" onclick="menuBarClick('table')">&#128462;</a>
+</div>
 
 <div class="container">
 
 <h2>${appName} <small>API Test Coverage</small></h2>
 <h3>${currentDateAndTime}</h3>
 
-<h3 class="mid-text-style">Global Endpoint Coverage</h3>
+<div id="charts">
+<h4 class="area-title">Global Endpoint Coverage</h4>
 <div id="donutchart" class="col-xs-12 col-sm-6 col-md-4">
   <div id="piechart"></div>
   <div id="labelOverlay">
@@ -324,10 +375,11 @@ h3 {
   </div>
 </div>
 
-<h3>Area-wise Endpoint Coverages</h3>
+<h4 class="area-title">Area-wise Endpoint Coverages</h4>
 <div id="chart_div" style="width: 900px; height: 500px;">Endpoint List</div>
+</div>
 
-<ul class="responsive-table">
+<ul id="table" class="responsive-table">
     <#list endpointCoverage?keys as area>
         <h4 class="area-title">${area}</h4>
         <#list endpointCoverage[area] as endpoint>
@@ -339,7 +391,7 @@ h3 {
               <#assign color = 'failed'>
             </#if>
 
-            <li id="${area}-endpoint-${endpoint?index}" onclick="myFunction('${area}-detail${endpoint?index}', '${area}-endpoint-${endpoint?index}')" class=${lineClass}>
+            <li id="${area}-endpoint-${endpoint?index}" onclick="openEndpointRow('${area}-detail${endpoint?index}', '${area}-endpoint-${endpoint?index}')" class=${lineClass}>
                 <div class="col col-2 col-2-${endpoint.method}">${endpoint.method}</div>
                 <div class="col col-3">${endpoint.endpoint}</div>
                 <div class="col col-4 ${color}"># of tests ${endpoint.testCases?size}</div>
@@ -365,8 +417,6 @@ h3 {
         </#list>
     </#list>
 </ul>
-
-<div class="footer">${footer}</div>
 
 </div>
 

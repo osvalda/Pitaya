@@ -50,7 +50,6 @@ public class PitayaCoverageReporter implements IReporter {
     public void generateReport(List<XmlSuite> xmlSuites, List<ISuite> suites, String outputDirectory) {
         String appName = PropertiesUtility.getStringProperty(PitayaPropertyKeys.APPLICATION_NAME_PROPERTY, true);
         String endpointList = PropertiesUtility.getStringProperty(PitayaPropertyKeys.ENDPOINT_LIST_PROPERTY, true);
-        String footer = PropertiesUtility.getStringProperty(PitayaPropertyKeys.REPORT_FOOTER_PROPERTY, false);
 
         String dateAndTime = LocalDateTime.now().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM));
 
@@ -71,7 +70,6 @@ public class PitayaCoverageReporter implements IReporter {
         templateInput.put("areaNumber", PitayaMapArrangeUtility.arrangeEndpointsByAreas(coverages).keySet().size());
         templateInput.put("currentDateAndTime", dateAndTime);
         templateInput.put("appName", appName);
-        templateInput.put("footer", footer);
 
         try {
             Template template = TemplateConfigurationProvider.getTemplateConfiguration()
