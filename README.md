@@ -113,13 +113,13 @@ The following tools are used across the project.
 | mockito | 2.15.0 |
 | swagger-parser-v3 | 2.0.21 |
 
-## Examples
+## Preview
 
-<a href="https://i.ibb.co/PT6CKMd/pitaya-main.jpg" target="_blank">
-    <img width="210" height="247" alt="charts" src="https://i.ibb.co/PT6CKMd/pitaya-main.jpg">
+<a href="https://i.ibb.co/7S8xDsJ/pitaya-main.jpg" target="_blank">
+    <img width="425" height="247" alt="charts" src="https://i.ibb.co/7S8xDsJ/pitaya-main.jpg">
 </a>
-<a href="https://i.ibb.co/FbPZwvR/pitaya-list.jpg" target="_blank">
-    <img width="233" height="247" alt="endpoint list" src="https://i.ibb.co/FbPZwvR/pitaya-list.jpg">
+<a href="https://i.ibb.co/tpDFbKV/pitaya-list.jpg" target="_blank">
+    <img width="425" height="247" alt="endpoint list" src="https://i.ibb.co/tpDFbKV/pitaya-list.jpg">
 </a>
 
 ## CI Issues and solutions
