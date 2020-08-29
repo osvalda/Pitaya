@@ -4,7 +4,6 @@ import io.github.osvalda.pitaya.util.PropertiesUtility;
 import org.assertj.core.api.Assertions;
 import org.testng.annotations.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class PropertiesUtilityTests {
@@ -18,12 +17,12 @@ public class PropertiesUtilityTests {
 
     @Test
     public void testExistingMandatoryField() {
-        Assertions.assertThat(PropertiesUtility.getStringProperty("application.name", true)).isEqualTo("Pitaya");
+        Assertions.assertThat(PropertiesUtility.getStringProperty("application.name", true)).isEqualTo("Test App 2000");
     }
 
     @Test
     public void testExistingNotMandatoryField() {
-        Assertions.assertThat(PropertiesUtility.getStringProperty("application.name", false)).isEqualTo("Pitaya");
+        Assertions.assertThat(PropertiesUtility.getStringProperty("application.name", false)).isEqualTo("Test App 2000");
     }
 
     @Test

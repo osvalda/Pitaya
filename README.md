@@ -17,16 +17,16 @@ API coverage visualizer tool. Creates an easily readable html report based upon 
 <dependency>
     <groupId>io.github.osvalda</groupId>
     <artifactId>Pitaya</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
     <scope>test</scope>
 </dependency>
 ```
 
 **Gradle**:
 
-```
+```Groovy
 dependencies {
-    testCompile("io.github.osvalda:pitaya:1.0.0")
+    testCompile("io.github.osvalda:pitaya:1.1.0")
 }
 ```
 
@@ -59,7 +59,6 @@ add the following properties to it:
 | ------ | ------ | ------ |
 | application.name | The name of your SUT | Yes | 
 | endpoint.list.input | The endpoint list file's relative path or Open API file URL| Yes |
-| report.footer | Footer content for the HTML report | No |
 
 ### Test case modifications
 
@@ -114,14 +113,23 @@ The following tools are used across the project.
 | mockito | 2.15.0 |
 | swagger-parser-v3 | 2.0.21 |
 
-## Examples
+## Preview
 
-<a href="https://i.ibb.co/PT6CKMd/pitaya-main.jpg" target="_blank">
-    <img width="210" height="247" alt="charts" src="https://i.ibb.co/PT6CKMd/pitaya-main.jpg">
+<a href="https://i.ibb.co/7S8xDsJ/pitaya-main.jpg" target="_blank">
+    <img width="425" height="247" alt="charts" src="https://i.ibb.co/7S8xDsJ/pitaya-main.jpg">
 </a>
-<a href="https://i.ibb.co/FbPZwvR/pitaya-list.jpg" target="_blank">
-    <img width="233" height="247" alt="endpoint list" src="https://i.ibb.co/FbPZwvR/pitaya-list.jpg">
+<a href="https://i.ibb.co/tpDFbKV/pitaya-list.jpg" target="_blank">
+    <img width="425" height="247" alt="endpoint list" src="https://i.ibb.co/tpDFbKV/pitaya-list.jpg">
 </a>
+
+## CI Issues and solutions
+
+### Jenkins
+
+If Jenkins fails to display css, then run the following command in `Manage Jenkins` / `Script console`
+```
+System.setProperty("hudson.model.DirectoryBrowserSupport.CSP", "")
+```
 
 
 [TestNG]: <https://testng.org/doc/>
