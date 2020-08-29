@@ -59,7 +59,6 @@ add the following properties to it:
 | ------ | ------ | ------ |
 | application.name | The name of your SUT | Yes | 
 | endpoint.list.input | The endpoint list file's relative path or Open API file URL| Yes |
-| report.footer | Footer content for the HTML report | No |
 
 ### Test case modifications
 

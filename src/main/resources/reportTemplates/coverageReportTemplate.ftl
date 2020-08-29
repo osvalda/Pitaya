@@ -43,7 +43,6 @@ h3 {
 .container {
   max-width: 1000px;
   padding-left: 90px;
-  padding-right: 10px;
 }
 .footer {
   margin-top: 35px;
@@ -52,7 +51,7 @@ h3 {
 .area-title {
   display: flex;
   align-items: center;
-  padding: 25px 20px 10px 10px;
+  padding: 25px 20px 10px 0px;
   font-size: 24px;
   max-width: 700;
   margin: 0 0 5px;
@@ -379,7 +378,7 @@ h3 {
 <div id="chart_div" style="width: 900px; height: 500px;">Endpoint List</div>
 </div>
 
-<ul id="table" class="responsive-table">
+<ul id="table" class="responsive-table" style="padding-inline-start: 0px; padding-left: 0px; margin-top: 0px;">
     <#list endpointCoverage?keys as area>
         <h4 class="area-title">${area}</h4>
         <#list endpointCoverage[area] as endpoint>
