@@ -375,7 +375,11 @@ h3 {
 </div>
 
 <h4 class="area-title">Area-wise Endpoint Coverages</h4>
-<div id="chart_div" style="width: 900px; height: 500px;">Endpoint List</div>
+<#if barChartHeight?has_content>
+    <div id="chart_div" style="width:  ${barChartWidth}px; height:  ${barChartHeight}px;">Endpoint List</div>
+<#else>
+    <div id="chart_div" style="width: 900px; height: 500px;">Endpoint List</div>
+</#if>
 </div>
 
 <ul id="table" class="responsive-table" style="padding-inline-start: 0px; padding-left: 0px; margin-top: 0px;">

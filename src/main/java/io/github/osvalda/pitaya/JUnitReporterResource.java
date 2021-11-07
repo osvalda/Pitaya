@@ -45,6 +45,8 @@ public class JUnitReporterResource implements ExtensionContext.Store.CloseableRe
     @Override
     public void close() throws IOException, TemplateException {
         String appName = PropertiesUtility.getStringProperty(PitayaPropertyKeys.APPLICATION_NAME_PROPERTY, true);
+        String barChartWidth = PropertiesUtility.getStringProperty(PitayaPropertyKeys.BAR_CHART_WIDTH, false);
+        String barChartHeight = PropertiesUtility.getStringProperty(PitayaPropertyKeys.BAR_CHART_HEIGHT, false);
 
         String dateAndTime = LocalDateTime.now().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM));
 
@@ -59,6 +61,10 @@ public class JUnitReporterResource implements ExtensionContext.Store.CloseableRe
         templateInput.put("areaNumber", areaWiseEndpointMap.keySet().size());
         templateInput.put("currentDateAndTime", dateAndTime);
         templateInput.put("appName", appName);
+        if(!barChartHeight.isEmpty() && !barChartWidth.isEmpty()) {
+            templateInput.put("barChartHeight", barChartHeight);
+            templateInput.put("barChartWidth", barChartWidth);
+        }
 
         Template template = TemplateConfigurationProvider.getTemplateConfiguration()
                 .getTemplate("coverageReportTemplate.ftl");
