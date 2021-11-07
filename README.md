@@ -17,7 +17,7 @@ API coverage visualizer tool. Creates an easily readable html report based upon 
 <dependency>
     <groupId>io.github.osvalda</groupId>
     <artifactId>Pitaya</artifactId>
-    <version>1.1.0</version>
+    <version>1.2.0</version>
     <scope>test</scope>
 </dependency>
 ```
@@ -26,7 +26,7 @@ API coverage visualizer tool. Creates an easily readable html report based upon 
 
 ```Groovy
 dependencies {
-    testCompile("io.github.osvalda:pitaya:1.1.0")
+    testCompile("io.github.osvalda:Pitaya:1.2.0")
 }
 ```
 
@@ -59,6 +59,8 @@ add the following properties to it:
 | ------ | ------ | ------ |
 | application.name | The name of your SUT | Yes | 
 | endpoint.list.input | The endpoint list file's relative path or Open API file URL| Yes |
+| bar.chart.width | The width of the Area-wise Endpoint Coverages chart| No |
+| bar.chart.height | The height of the Area-wise Endpoint Coverages chart| No |
 
 ### Test case modifications
 
@@ -98,9 +100,9 @@ The following tools are used across the project.
 
 | Name | Version |
 | ------ | ------ |
-| testng | 7.0.0 |
-| junit.jupiter | 5.6.2 |
-| junit.platform | 1.6.2 |
+| testng | 7.4.0 |
+| junit.jupiter | 5.8.1 |
+| junit.platform | 1.8.1 |
 | freemarker | 2.3.29 |
 | lombok |1.18.12|
 | assertj-core | 3.14.0 |

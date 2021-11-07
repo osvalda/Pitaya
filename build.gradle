@@ -5,7 +5,7 @@ plugins {
 }
 
 group 'io.github.osvalda'
-version '1.1.0'
+version '1.2.0'
 
 sourceCompatibility = 1.8
 
@@ -42,9 +42,9 @@ jacocoTestReport {
 }
 
 dependencies {
-    compile group: 'org.testng', name: 'testng', version: '7.0.0'
-    compile group: 'org.junit.jupiter', name:'junit-jupiter-engine', version:'5.6.2'
-    compile group: 'org.junit.platform', name: 'junit-platform-launcher', version: '1.6.2'
+    compile group: 'org.testng', name: 'testng', version: '7.4.0'
+    compile group: 'org.junit.jupiter', name:'junit-jupiter-engine', version:'5.8.1'
+    compile group: 'org.junit.platform', name: 'junit-platform-launcher', version: '1.8.1'
 
     compile group: 'org.projectlombok', name: 'lombok', version: '1.18.12'
     compile group: 'org.freemarker', name: 'freemarker', version: '2.3.29'
