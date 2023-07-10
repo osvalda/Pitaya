@@ -1,19 +1,12 @@
 package io.github.osvalda.pitaya;
 
 import io.github.osvalda.pitaya.models.CoverageObject;
-import io.github.osvalda.pitaya.util.PitayaPropertyKeys;
-import io.github.osvalda.pitaya.util.TemplateConfigurationProvider;
-import freemarker.template.Template;
-import freemarker.template.TemplateException;
 import io.github.osvalda.pitaya.util.PitayaMapArrangeUtility;
+import io.github.osvalda.pitaya.util.PitayaPropertyKeys;
 import io.github.osvalda.pitaya.util.PropertiesUtility;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.extension.ExtensionContext;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Writer;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
@@ -28,7 +21,7 @@ import java.util.Map;
  * @author Akos Osvald
  */
 @Slf4j
-public class JUnitReporterResource implements ExtensionContext.Store.CloseableResource {
+public class JUnitReporterResource extends CoverageReporter implements ExtensionContext.Store.CloseableResource {
 
     private Map<String, CoverageObject> coverages;
 
@@ -43,35 +36,28 @@ public class JUnitReporterResource implements ExtensionContext.Store.CloseableRe
      * The output is PitayaReport.html file.
      */
     @Override
-    public void close() throws IOException, TemplateException {
+    public void close() {
         String appName = PropertiesUtility.getStringProperty(PitayaPropertyKeys.APPLICATION_NAME_PROPERTY, true);
         String barChartWidth = PropertiesUtility.getStringProperty(PitayaPropertyKeys.BAR_CHART_WIDTH, false);
         String barChartHeight = PropertiesUtility.getStringProperty(PitayaPropertyKeys.BAR_CHART_HEIGHT, false);
-
         String dateAndTime = LocalDateTime.now().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM));
 
         Map<String, Object> templateInput = new HashMap<>();
-
         Map<String, List<CoverageObject>> areaWiseEndpointMap = PitayaMapArrangeUtility.arrangeEndpointsByAreas(coverages);
 
-        templateInput.put("areaWiseEndpoints", PitayaMapArrangeUtility.collectAreaWiseEndpointDetails(coverages));
-        templateInput.put("endpointCoverage", areaWiseEndpointMap);
-        templateInput.put("allEndpointsNumber", coverages.keySet().size());
-        templateInput.put("coveredEndpointsNumber", PitayaMapArrangeUtility.countCoveredEndpoints(coverages));
-        templateInput.put("areaNumber", areaWiseEndpointMap.keySet().size());
-        templateInput.put("currentDateAndTime", dateAndTime);
-        templateInput.put("appName", appName);
+        templateInput.put(AREA_WISE_ENDPOINTS, PitayaMapArrangeUtility.collectAreaWiseEndpointDetails(coverages));
+        templateInput.put(ENDPOINT_COVERAGE, areaWiseEndpointMap);
+        templateInput.put(ALL_ENDPOINTS_NUMBER, coverages.keySet().size());
+        templateInput.put(COVERED_ENDPOINTS_NUMBER, PitayaMapArrangeUtility.countCoveredEndpoints(coverages));
+        templateInput.put(AREA_NUMBER, areaWiseEndpointMap.keySet().size());
+        templateInput.put(CURRENT_DATE_AND_TIME, dateAndTime);
+        templateInput.put(APP_NAME, appName);
         if(!barChartHeight.isEmpty() && !barChartWidth.isEmpty()) {
-            templateInput.put("barChartHeight", barChartHeight);
-            templateInput.put("barChartWidth", barChartWidth);
+            templateInput.put(BAR_CHART_HEIGHT, barChartHeight);
+            templateInput.put(BAR_CHART_WIDTH, barChartWidth);
         }
 
-        Template template = TemplateConfigurationProvider.getTemplateConfiguration()
-                .getTemplate("coverageReportTemplate.ftl");
-        File reportHtml = new File("PitayaReport.html");
-        Writer fileWriter = new FileWriter(reportHtml);
-        template.process(templateInput, fileWriter);
-        log.info("Pitaya report is successfully created: {}", reportHtml.getAbsoluteFile());
+        saveReportResult(templateInput);
     }
 
 }

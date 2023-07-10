@@ -2,29 +2,21 @@ package io.github.osvalda.pitaya;
 
 import io.github.osvalda.pitaya.annotation.TestCaseSupplementary;
 import io.github.osvalda.pitaya.endpointlist.EndpointList;
-import io.github.osvalda.pitaya.endpointlist.PitayaTextEndpointList;
-import io.github.osvalda.pitaya.endpointlist.SwaggerV3EndpointList;
 import io.github.osvalda.pitaya.models.CoverageObject;
 import io.github.osvalda.pitaya.util.PitayaMapArrangeUtility;
 import io.github.osvalda.pitaya.util.PitayaPropertyKeys;
-import io.github.osvalda.pitaya.util.TemplateConfigurationProvider;
-import freemarker.template.Template;
-import freemarker.template.TemplateException;
 import io.github.osvalda.pitaya.util.PropertiesUtility;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.*;
 import org.testng.xml.XmlSuite;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Writer;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.*;
 import java.util.stream.Stream;
 
+import static io.github.osvalda.pitaya.endpointlist.EndpointListProcessorFactory.createEndpointListProcessor;
 import static io.github.osvalda.pitaya.util.PitayaMapArrangeUtility.countCoveredEndpoints;
 
 /**
@@ -36,9 +28,8 @@ import static io.github.osvalda.pitaya.util.PitayaMapArrangeUtility.countCovered
  * @author Akos Osvald
  */
 @Slf4j
-public class PitayaCoverageReporter implements IReporter {
+public class PitayaCoverageReporter extends CoverageReporter implements IReporter {
 
-    private EndpointList listProcessor;
     private Map<String, CoverageObject> coverages;
 
     /**
@@ -52,43 +43,27 @@ public class PitayaCoverageReporter implements IReporter {
         String endpointList = PropertiesUtility.getStringProperty(PitayaPropertyKeys.ENDPOINT_LIST_PROPERTY, true);
         String barChartWidth = PropertiesUtility.getStringProperty(PitayaPropertyKeys.BAR_CHART_WIDTH, false);
         String barChartHeight = PropertiesUtility.getStringProperty(PitayaPropertyKeys.BAR_CHART_HEIGHT, false);
-
         String dateAndTime = LocalDateTime.now().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM));
 
-        Map<String, Object> templateInput = new HashMap<>();
-
-        if(endpointList.endsWith("txt"))
-            listProcessor = new PitayaTextEndpointList();
-        else
-            listProcessor = new SwaggerV3EndpointList();
+        EndpointList listProcessor = createEndpointListProcessor(endpointList);
         coverages = listProcessor.processEndpointListFile(endpointList);
 
         createTheEndpointTableInput(suites);
 
-        templateInput.put("areaWiseEndpoints", PitayaMapArrangeUtility.collectAreaWiseEndpointDetails(coverages));
-        templateInput.put("endpointCoverage", PitayaMapArrangeUtility.arrangeEndpointsByAreas(coverages));
-        templateInput.put("allEndpointsNumber", coverages.keySet().size());
-        templateInput.put("coveredEndpointsNumber", countCoveredEndpoints(coverages));
-        templateInput.put("areaNumber", PitayaMapArrangeUtility.arrangeEndpointsByAreas(coverages).keySet().size());
-        templateInput.put("currentDateAndTime", dateAndTime);
-        templateInput.put("appName", appName);
+        Map<String, Object> templateInput = new HashMap<>();
+        templateInput.put(AREA_WISE_ENDPOINTS, PitayaMapArrangeUtility.collectAreaWiseEndpointDetails(coverages));
+        templateInput.put(ENDPOINT_COVERAGE, PitayaMapArrangeUtility.arrangeEndpointsByAreas(coverages));
+        templateInput.put(ALL_ENDPOINTS_NUMBER, coverages.keySet().size());
+        templateInput.put(COVERED_ENDPOINTS_NUMBER, countCoveredEndpoints(coverages));
+        templateInput.put(AREA_NUMBER, PitayaMapArrangeUtility.arrangeEndpointsByAreas(coverages).keySet().size());
+        templateInput.put(CURRENT_DATE_AND_TIME, dateAndTime);
+        templateInput.put(APP_NAME, appName);
         if(!barChartHeight.isEmpty() && !barChartWidth.isEmpty()) {
-            templateInput.put("barChartHeight", barChartHeight);
-            templateInput.put("barChartWidth", barChartWidth);
+            templateInput.put(BAR_CHART_HEIGHT, barChartHeight);
+            templateInput.put(BAR_CHART_WIDTH, barChartWidth);
         }
 
-
-        try {
-            Template template = TemplateConfigurationProvider.getTemplateConfiguration()
-                    .getTemplate("coverageReportTemplate.ftl");
-            File reportHtml = new File("PitayaReport.html");
-            Writer fileWriter = new FileWriter(reportHtml);
-            template.process(templateInput, fileWriter);
-            log.info("Pitaya report is successfully created: {}", reportHtml.getAbsoluteFile());
-        } catch (IOException | TemplateException e) {
-            log.error("The report creation has failed!");
-            throw new IllegalStateException(e.getMessage(), e);
-        }
+        saveReportResult(templateInput);
     }
 
     private void createTheEndpointTableInput(List<ISuite> suites) {
@@ -98,12 +73,9 @@ public class PitayaCoverageReporter implements IReporter {
     private void processTestSuiteResult(Map.Entry<String, ISuiteResult> suiteResultEntry) {
             ITestContext testContext = suiteResultEntry.getValue().getTestContext();
 
-            Set<ITestResult> failedTests
-                    = testContext.getFailedTests().getAllResults();
-            Set<ITestResult> passedTests
-                    = testContext.getPassedTests().getAllResults();
-            Set<ITestResult> skippedTests
-                    = testContext.getSkippedTests().getAllResults();
+            Set<ITestResult> failedTests = testContext.getFailedTests().getAllResults();
+            Set<ITestResult> passedTests = testContext.getPassedTests().getAllResults();
+            Set<ITestResult> skippedTests = testContext.getSkippedTests().getAllResults();
 
             Stream.of(failedTests, passedTests, skippedTests).forEach(result -> result.forEach(this::updateCoverage));
     }

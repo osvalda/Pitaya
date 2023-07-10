@@ -23,7 +23,7 @@ body {
   line-height: 1.42857143;
   color: #333;
   text-align: -webkit-left;
-  background-color: #fff
+  background-color: #efefef
 }
 
 h2 {
@@ -234,6 +234,15 @@ h3 {
   color: #8e8e8e;
 }
 
+/* COVERAGE TABLE */
+
+.coverage-table {
+  border: 1px solid black;
+  background-color: white;
+}
+
+/* SIDE NAVIGATOR */
+
 .sidenav {
   text-align: center;
   height: 100%;
@@ -288,7 +297,7 @@ h3 {
         	position: 'none'
         },
         'pieSliceText': 'none',
-        'colors': ['#e4f8ee', '#fdb8b8']};
+        'colors': ['#7DCEA0', '#D98880']};
       var chart = new google.visualization.PieChart(document.getElementById('piechart'));
       chart.draw(data, options);
     }
@@ -307,7 +316,7 @@ h3 {
         hAxis: {title: 'Areas'},
         animation: {startup: true, easing: 'inAndOut', duration: 700},
         seriesType: 'bars',
-        colors: ['#e4f8ee', '#fdb8b8', '#d35ebe'],
+        colors: ['7DCEA0', '#D98880', '#d35ebe'],
         series: {2: {type: 'line'}}
       };
 
@@ -366,6 +375,10 @@ h3 {
 <h3>${currentDateAndTime}</h3>
 
 <div id="charts">
+<table>
+<tr>
+<td>
+
 <h4 class="area-title">Global Endpoint Coverage</h4>
 <div id="donutchart" class="col-xs-12 col-sm-6 col-md-4">
   <div id="piechart"></div>
@@ -373,6 +386,25 @@ h3 {
     <p class="used-size">${coveragePercent?string["##0.0"]}%</p>
   </div>
 </div>
+
+</td>
+
+<td>
+
+<table style="background: white">
+  <tr>
+    <td>Covered</td>
+    <td>Missing</td>
+  </tr>
+  <tr>
+    <td>${coveredEndpointsNumber}</td>
+    <td>${missedEndpointNum}</td>
+  </tr>
+</table>
+
+</td>
+</tr>
+</table>
 
 <h4 class="area-title">Area-wise Endpoint Coverages</h4>
 <#if barChartHeight?has_content>
