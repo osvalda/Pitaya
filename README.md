@@ -17,7 +17,7 @@ API coverage visualizer tool. Creates an easily readable html report based upon 
 <dependency>
     <groupId>io.github.osvalda</groupId>
     <artifactId>Pitaya</artifactId>
-    <version>1.2.0</version>
+    <version>1.2.1</version>
     <scope>test</scope>
 </dependency>
 ```
@@ -26,7 +26,7 @@ API coverage visualizer tool. Creates an easily readable html report based upon 
 
 ```Groovy
 dependencies {
-    testCompile("io.github.osvalda:Pitaya:1.2.0")
+    testCompile("io.github.osvalda:Pitaya:1.2.1")
 }
 ```
 

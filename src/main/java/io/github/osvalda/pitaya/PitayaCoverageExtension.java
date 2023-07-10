@@ -2,8 +2,6 @@ package io.github.osvalda.pitaya;
 
 import io.github.osvalda.pitaya.annotation.TestCaseSupplementary;
 import io.github.osvalda.pitaya.endpointlist.EndpointList;
-import io.github.osvalda.pitaya.endpointlist.PitayaTextEndpointList;
-import io.github.osvalda.pitaya.endpointlist.SwaggerV3EndpointList;
 import io.github.osvalda.pitaya.models.CoverageObject;
 import io.github.osvalda.pitaya.util.PitayaPropertyKeys;
 import io.github.osvalda.pitaya.util.PropertiesUtility;
@@ -18,6 +16,8 @@ import org.testng.internal.TestResult;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Optional;
+
+import static io.github.osvalda.pitaya.endpointlist.EndpointListProcessorFactory.createEndpointListProcessor;
 
 /**
  * API coverage report JUnit5 extension. Collects the covered endpoints from the executed test cases
@@ -66,10 +66,7 @@ public class PitayaCoverageExtension implements TestWatcher, AfterAllCallback {
     private void updateCoverage(TestCaseSupplementary supplementary, ITestResult testResult, ExtensionContext context) {
         ExtensionContext.Store globalStore = context.getRoot().getStore(ExtensionContext.Namespace.GLOBAL);
         String endpointList = PropertiesUtility.getStringProperty(PitayaPropertyKeys.ENDPOINT_LIST_PROPERTY, true);
-        if(endpointList.endsWith("txt"))
-            listProcessor = new PitayaTextEndpointList();
-        else
-            listProcessor = new SwaggerV3EndpointList();
+        listProcessor = createEndpointListProcessor(endpointList);
         coverages = listProcessor.processEndpointListFile(endpointList);
 
         coverages = globalStore.getOrComputeIfAbsent(endpointList, key -> listProcessor.processEndpointListFile(key),
@@ -86,10 +83,7 @@ public class PitayaCoverageExtension implements TestWatcher, AfterAllCallback {
     public void afterAll(ExtensionContext context) {
         ExtensionContext.Store globalStore = context.getRoot().getStore(ExtensionContext.Namespace.GLOBAL);
         String endpointList = PropertiesUtility.getStringProperty(PitayaPropertyKeys.ENDPOINT_LIST_PROPERTY, true);
-        if(endpointList.endsWith("txt"))
-            listProcessor = new PitayaTextEndpointList();
-        else
-            listProcessor = new SwaggerV3EndpointList();
+        listProcessor = createEndpointListProcessor(endpointList);
         coverages = listProcessor.processEndpointListFile(endpointList);
 
         coverages = globalStore.getOrComputeIfAbsent(endpointList, key -> listProcessor.processEndpointListFile(key),
