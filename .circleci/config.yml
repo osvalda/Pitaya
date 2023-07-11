@@ -1,0 +1,57 @@
+version: 2.1
+
+workflows:
+  my-workflow:
+    jobs:
+      - build:
+          context:
+            - Pitaya
+
+jobs:
+  build:
+    docker:
+      - image: gradle:6.7.1-jdk8
+
+    working_directory: ~/repo
+
+    resource_class: medium
+
+    environment:
+      JVM_OPTS: -Xmx3200m
+      TERM: dumb
+
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "build.gradle" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+
+      - run:
+          name: Build project
+          command: gradle clean build -x test -i
+
+      - save_cache:
+          paths:
+            - ~/.gradle
+          key: v1-dependencies-{{ checksum "build.gradle" }}
+
+      - run:
+          name: Execute unit tests
+          command: gradle check -i
+
+      - run:
+          name: Coverage reporting
+          command: gradle jacocoTestReport coveralls
+          when: always
+
+      - run:
+          name: Save test results
+          command: |
+            mkdir -p ~/test-results/junit/
+            find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} ~/test-results/junit/ \;
+          when: always
+      - store_test_results:
+          path: ~/test-results
