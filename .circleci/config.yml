@@ -1,4 +1,11 @@
-version: 2
+version: 2.1
+
+workflows:
+  my-workflow:
+    jobs:
+      - build:
+          context:
+            - Pitaya
 
 jobs:
   build:
@@ -7,29 +14,44 @@ jobs:
 
     working_directory: ~/repo
 
+    resource_class: medium
+
     environment:
-      # Customize the JVM maximum heap limit
       JVM_OPTS: -Xmx3200m
       TERM: dumb
-    # Add steps to the job
-    # See: https://circleci.com/docs/configuration-reference/#steps
+
     steps:
       - checkout
 
-      # Download and cache dependencies
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "build.gradle" }}
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
 
-      - run: gradle clean build -x test -i
+      - run:
+          name: Build project
+          command: gradle clean build -x test -i
 
       - save_cache:
           paths:
             - ~/.gradle
           key: v1-dependencies-{{ checksum "build.gradle" }}
 
-      # run tests!
-      - run: gradle check -i
-      - run: gradle jacocoTestReport coveralls
+      - run:
+          name: Execute unit tests
+          command: gradle check -i
+
+      - run:
+          name: Coverage reporting
+          command: gradle jacocoTestReport coveralls
+          when: always
+
+      - run:
+          name: Save test results
+          command: |
+            mkdir -p ~/test-results/junit/
+            find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} ~/test-results/junit/ \;
+          when: always
+      - store_test_results:
+          path: ~/test-results

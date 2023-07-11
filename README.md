@@ -1,9 +1,9 @@
 # Pitaya
 
-[![Build Status](https://travis-ci.org/osvalda/Pitaya.svg?branch=master)](https://travis-ci.org/osvalda/Pitaya)
-[![Coverage Status](https://coveralls.io/repos/github/osvalda/Pitaya/badge.svg?branch=master)](https://coveralls.io/github/osvalda/Pitaya?branch=PAC-002)
+[![CircleCI](https://img.shields.io/circleci/build/github/osvalda/Pitaya/master)](https://app.circleci.com/pipelines/github/osvalda/Pitaya?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/osvalda/Pitaya/badge.svg?branch=master)](https://coveralls.io/github/osvalda/Pitaya?branch=master)
 [![GitHub license](https://img.shields.io/github/license/spotify/scio.svg)](./LICENSE)
-[![Maven Central](https://img.shields.io/maven-central/v/io.github.osvalda/Pitaya.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.osvalda%22%20AND%20a:%22Pitaya%22)
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.osvalda/Pitaya.svg?label=Maven%20Central)](https://central.sonatype.com/artifact/io.github.osvalda/Pitaya/)
 
 API coverage visualizer tool. Creates an easily readable html report based upon the executed API test cases.
 
