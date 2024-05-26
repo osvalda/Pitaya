@@ -43,6 +43,10 @@ DELETE /posts/{post_id}, Posts
 GET /posts/{post_id}/comments, Comments
 GET /comments/{post_id}, Comments
 
+# comment line
+# a star marks the endpoint to be ignored
+* GET /posts/{post_id}/pics, Pictures
+
 GET /posts/{post_id}/pics, Pictures
 ...
 ```
