@@ -43,9 +43,11 @@ public class EndpointListTests {
     public void testPitayaTextEndpointListFile() {
         Map<String, CoverageObject> stringCoverageObjectMap = new PitayaTextEndpointList().processEndpointListFile("endpoints/all_endpoints.txt");
 
-        assertThat(stringCoverageObjectMap).hasSize(14).containsKey("PUT /posts/pics");
+        assertThat(stringCoverageObjectMap).hasSize(15).containsKey("PUT /posts/pics");
         assertThat(stringCoverageObjectMap.get("PUT /posts/pics").getArea()).isEqualTo("Pictures");
         assertThat(stringCoverageObjectMap.get("PUT /posts/pics").getTestCases()).isEmpty();
+        assertThat(stringCoverageObjectMap.get("POST /posts/ignored").isIgnored()).isTrue();
+        assertThat(stringCoverageObjectMap).doesNotContainKey("PUT /posts/commented");
     }
 
 }

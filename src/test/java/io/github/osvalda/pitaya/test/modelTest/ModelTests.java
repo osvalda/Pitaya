@@ -12,7 +12,7 @@ public class ModelTests {
 
     @Test
     public void testAreaWiseEndpointObjectWithCoveredInitialEndpoint() {
-        AreaWiseCoverageObject sut = new AreaWiseCoverageObject(1);
+        AreaWiseCoverageObject sut = new AreaWiseCoverageObject(1, false);
         assertThat(sut.getAllEndpoints()).isEqualTo(1);
         assertThat(sut.getCoveredEndpoints()).isEqualTo(1);
         assertThat(sut.getUncoveredEndpointNum()).isZero();
@@ -28,13 +28,16 @@ public class ModelTests {
 
     @Test
     public void testAreaWiseEndpointObjectIncreasedEndpoints () {
-        AreaWiseCoverageObject sut = new AreaWiseCoverageObject(1);
-        sut.increaseCoverage(11);
-        sut.increaseCoverage(1);
-        sut.increaseCoverage(0);
+        AreaWiseCoverageObject sut = new AreaWiseCoverageObject(1, false);
+        sut.increaseCoverage(11, false);
+        sut.increaseCoverage(1, false);
+        sut.increaseCoverage(0, false);
+        sut.increaseCoverage(0, true);
+        sut.increaseCoverage(0, true);
         assertThat(sut.getCoveredEndpoints()).isEqualTo(3);
-        assertThat(sut.getAllEndpoints()).isEqualTo(4);
+        assertThat(sut.getAllEndpoints()).isEqualTo(6);
         assertThat(sut.getUncoveredEndpointNum()).isEqualTo(1);
+        assertThat(sut.getIgnoredEndpoints()).isEqualTo(2);
     }
 
     @Test

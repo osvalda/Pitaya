@@ -5,6 +5,10 @@ POST /posts, Posts
 PUT /posts/{post_id}, Posts
 PATCH /posts/{post_id}, Posts
 DELETE /posts/{post_id}, Posts
+* POST /posts/ignored, Posts
+ # PUT /posts/commented, Posts
+
+# this is a regular comment
 
 GET /posts/{post_id}/comments, Comments
 GET /comments/{post_id}, Comments

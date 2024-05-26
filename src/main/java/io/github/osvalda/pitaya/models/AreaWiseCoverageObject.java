@@ -13,16 +13,21 @@ public class AreaWiseCoverageObject {
     private int coveredEndpoints;
     @Getter
     private int allEndpoints;
+    @Getter
+    private int ignoredEndpoints = 0;
 
     /**
      * Creates a new area wise coverage object with first endpoint
      *
      * @param covered how many test case cover the first endpoint
      */
-    public AreaWiseCoverageObject(int covered) {
+    public AreaWiseCoverageObject(int covered, boolean ignored) {
         allEndpoints = 1;
-        if(covered > 0)
+        if(covered > 0) {
             this.coveredEndpoints = 1;
+        } if (ignored) {
+            ignoredEndpoints += 1;
+        }
     }
 
     /**
@@ -38,16 +43,19 @@ public class AreaWiseCoverageObject {
      *
      * @param covered how many test case cover the newly added endpoint
      */
-    public void increaseCoverage(int covered) {
+    public void increaseCoverage(int covered, boolean ignored) {
         allEndpoints += 1;
-        if(covered > 0)
+        if(covered > 0) {
             this.coveredEndpoints += 1;
+        } if (ignored) {
+            ignoredEndpoints += 1;
+        }
     }
 
     /**
      * Returns the number of uncovered endpoints of the area.
      */
     public int getUncoveredEndpointNum() {
-        return allEndpoints - coveredEndpoints;
+        return allEndpoints - coveredEndpoints - ignoredEndpoints;
     }
 }

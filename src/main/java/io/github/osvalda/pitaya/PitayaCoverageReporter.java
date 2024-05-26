@@ -54,6 +54,7 @@ public class PitayaCoverageReporter extends CoverageReporter implements IReporte
         templateInput.put(AREA_WISE_ENDPOINTS, PitayaMapArrangeUtility.collectAreaWiseEndpointDetails(coverages));
         templateInput.put(ENDPOINT_COVERAGE, PitayaMapArrangeUtility.arrangeEndpointsByAreas(coverages));
         templateInput.put(ALL_ENDPOINTS_NUMBER, coverages.keySet().size());
+        templateInput.put(IGNORED_NUMBER, coverages.values().stream().filter(CoverageObject::isIgnored).count());
         templateInput.put(COVERED_ENDPOINTS_NUMBER, countCoveredEndpoints(coverages));
         templateInput.put(AREA_NUMBER, PitayaMapArrangeUtility.arrangeEndpointsByAreas(coverages).keySet().size());
         templateInput.put(CURRENT_DATE_AND_TIME, dateAndTime);
