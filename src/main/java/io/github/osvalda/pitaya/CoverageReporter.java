@@ -26,6 +26,7 @@ public abstract class CoverageReporter {
     protected static final String APP_NAME = "appName";
     protected static final String BAR_CHART_HEIGHT = "barChartHeight";
     protected static final String BAR_CHART_WIDTH = "barChartWidth";
+    protected static final String IGNORED_NUMBER = "ignoredEndpointNumber";
 
     protected void saveReportResult(Map<String, Object> templateInput) {
         try {

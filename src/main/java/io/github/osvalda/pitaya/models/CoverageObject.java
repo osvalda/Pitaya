@@ -24,6 +24,8 @@ public class CoverageObject {
     @Getter
     private String api = "NoN";
     @Getter
+    private boolean ignored = false;
+    @Getter
     private List<ITestResult> testCases = new ArrayList<>();
 
     /**
@@ -33,8 +35,20 @@ public class CoverageObject {
      * @param endpoint the actual endpoint
      */
     public CoverageObject(String area, String endpoint) {
+        this(area, endpoint, false);
+    }
+
+    /**
+     * Creates a new coverage object for an area's endpoint
+     *
+     * @param area the area where the endpoint belongs
+     * @param endpoint the actual endpoint
+     * @param ignored marks the endpoint to be ignored in the report
+     */
+    public CoverageObject(String area, String endpoint, boolean ignored) {
         this.area = area;
         this.api = endpoint;
+        this.ignored = ignored;
         if(!endpoint.isEmpty()) {
             this.endpoint = StringUtils.substringAfter(endpoint, SEPARATOR);
             this.method = StringUtils.substringBefore(endpoint, SEPARATOR);

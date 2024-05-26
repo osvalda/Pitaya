@@ -6,7 +6,7 @@
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
 
-<#assign missedEndpointNum = (allEndpointsNumber - coveredEndpointsNumber)>
+<#assign missedEndpointNum = (allEndpointsNumber - coveredEndpointsNumber - ignoredEndpointNumber)>
 <#assign coveragePercent = ((coveredEndpointsNumber / allEndpointsNumber) * 100)>
 <#if coveragePercent == 100>
    <#assign left = '224px'>
@@ -97,6 +97,11 @@ h3 {
   box-shadow: 0px 0px 9px 0px rgba(249, 62, 62, 0.1);
   border: 1px solid #f93e3e;
 }
+.responsive-table .table-row-ignore {
+  background-color: rgba(128, 209, 217, 0.15);
+  box-shadow: 0px 0px 9px 0px rgba(89, 195, 205, 0.1);
+  border: 1px solid #59C3CD;
+}
 .responsive-table .detail-content {
   border-radius: 0px;
   border-bottom-left-radius: 3px;
@@ -165,6 +170,9 @@ h3 {
 }
 .responsive-table .skipped {
   color: orange;
+}
+.responsive-table .ignored {
+  color: #59C3CD;
 }
 
 .responsive-table .hed-1 {
@@ -285,7 +293,8 @@ h3 {
       var data = google.visualization.arrayToDataTable([
         ['Coverage', 'Percentage'],
         ['Covered', ${coveredEndpointsNumber}],
-        ['Missed', ${missedEndpointNum}]
+        ['Missed', ${missedEndpointNum}],
+        ['Ignored', ${ignoredEndpointNumber}]
       ]);
 
       var options = {
@@ -297,16 +306,16 @@ h3 {
         	position: 'none'
         },
         'pieSliceText': 'none',
-        'colors': ['#7DCEA0', '#D98880']};
+        'colors': ['#7DCEA0', '#D98880', '#80D1D9']};
       var chart = new google.visualization.PieChart(document.getElementById('piechart'));
       chart.draw(data, options);
     }
 
     function drawAreaWiseBarChart() {
       var data = google.visualization.arrayToDataTable([
-        ['Area', 'Covered', 'Missing', 'Average'],
+        ['Area', 'Covered', 'Missing', 'Ignored'],
         <#list endpointCoverage?keys as key>
-          ['${key}', ${areaWiseEndpoints[key].getCoveredEndpoints()}, ${areaWiseEndpoints[key].getUncoveredEndpointNum()}, (${coveredEndpointsNumber}/${areaNumber})], ${'\n'}
+          ['${key}', ${areaWiseEndpoints[key].getCoveredEndpoints()}, ${areaWiseEndpoints[key].getUncoveredEndpointNum()}, ${areaWiseEndpoints[key].getIgnoredEndpoints()}], ${'\n'}
         </#list>
       ]);
 
@@ -316,8 +325,8 @@ h3 {
         hAxis: {title: 'Areas'},
         animation: {startup: true, easing: 'inAndOut', duration: 700},
         seriesType: 'bars',
-        colors: ['7DCEA0', '#D98880', '#d35ebe'],
-        series: {2: {type: 'line'}}
+        colors: ['7DCEA0', '#D98880', '#80D1D9'],
+        isStacked: true
       };
 
       var chart = new google.visualization.ComboChart(document.getElementById('chart_div'));
@@ -395,10 +404,12 @@ h3 {
   <tr>
     <td>Covered</td>
     <td>Missing</td>
+    <td>Ignored</td>
   </tr>
   <tr>
     <td>${coveredEndpointsNumber}</td>
     <td>${missedEndpointNum}</td>
+    <td>${ignoredEndpointNumber}</td>
   </tr>
 </table>
 
@@ -421,6 +432,9 @@ h3 {
             <#if endpoint.testCases?size gt 0>
               <#assign lineClass = 'table-row-success'>
               <#assign color = 'passed'>
+            <#elseif endpoint.ignored>
+              <#assign lineClass = 'table-row-ignore'>
+              <#assign color = 'ignored'>
             <#else>
               <#assign lineClass = 'table-row-danger'>
               <#assign color = 'failed'>

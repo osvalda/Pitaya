@@ -25,10 +25,19 @@ public class PitayaTextEndpointList implements EndpointList {
                 throw new IllegalStateException("The endpoint input file is empty!");
             }
             FileUtils.readLines(file, StandardCharsets.UTF_8).forEach(fileLine -> {
+                boolean ignored = false;
                 if(!fileLine.isEmpty()) {
+                    fileLine = StringUtils.strip(fileLine);
+                    if (fileLine.startsWith("#")) {
+                        return;
+                    }
+                    if (fileLine.startsWith("*")) {
+                        fileLine = StringUtils.strip(fileLine, "* \n\t");
+                        ignored = true;
+                    }
                     String[] endpointLine = StringUtils.splitByWholeSeparator(fileLine, ", ");
                     if(endpointLine.length == 2) {
-                        endpoints.put(endpointLine[0], new CoverageObject(endpointLine[1], endpointLine[0]));
+                        endpoints.put(endpointLine[0], new CoverageObject(endpointLine[1], endpointLine[0], ignored));
                     }
                 }
             });

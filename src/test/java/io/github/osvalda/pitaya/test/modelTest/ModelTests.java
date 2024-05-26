@@ -12,10 +12,19 @@ public class ModelTests {
 
     @Test
     public void testAreaWiseEndpointObjectWithCoveredInitialEndpoint() {
-        AreaWiseCoverageObject sut = new AreaWiseCoverageObject(1);
+        AreaWiseCoverageObject sut = new AreaWiseCoverageObject(1, false);
         assertThat(sut.getAllEndpoints()).isEqualTo(1);
         assertThat(sut.getCoveredEndpoints()).isEqualTo(1);
         assertThat(sut.getUncoveredEndpointNum()).isZero();
+    }
+
+    @Test
+    public void testAreaWiseEndpointObjectWithIgnoredInitialEndpoint() {
+        AreaWiseCoverageObject sut = new AreaWiseCoverageObject(0, true);
+        assertThat(sut.getAllEndpoints()).isEqualTo(1);
+        assertThat(sut.getCoveredEndpoints()).isZero();
+        assertThat(sut.getUncoveredEndpointNum()).isZero();
+        assertThat(sut.getIgnoredEndpoints()).isEqualTo(1);
     }
 
     @Test
@@ -28,13 +37,16 @@ public class ModelTests {
 
     @Test
     public void testAreaWiseEndpointObjectIncreasedEndpoints () {
-        AreaWiseCoverageObject sut = new AreaWiseCoverageObject(1);
-        sut.increaseCoverage(11);
-        sut.increaseCoverage(1);
-        sut.increaseCoverage(0);
+        AreaWiseCoverageObject sut = new AreaWiseCoverageObject(1, false);
+        sut.increaseCoverage(11, false);
+        sut.increaseCoverage(1, false);
+        sut.increaseCoverage(0, false);
+        sut.increaseCoverage(0, true);
+        sut.increaseCoverage(0, true);
         assertThat(sut.getCoveredEndpoints()).isEqualTo(3);
-        assertThat(sut.getAllEndpoints()).isEqualTo(4);
+        assertThat(sut.getAllEndpoints()).isEqualTo(6);
         assertThat(sut.getUncoveredEndpointNum()).isEqualTo(1);
+        assertThat(sut.getIgnoredEndpoints()).isEqualTo(2);
     }
 
     @Test

@@ -52,6 +52,7 @@ public class JUnitReporterResource extends CoverageReporter implements Extension
         templateInput.put(AREA_NUMBER, areaWiseEndpointMap.keySet().size());
         templateInput.put(CURRENT_DATE_AND_TIME, dateAndTime);
         templateInput.put(APP_NAME, appName);
+        templateInput.put(IGNORED_NUMBER, coverages.values().stream().filter(CoverageObject::isIgnored).count());
         if(!barChartHeight.isEmpty() && !barChartWidth.isEmpty()) {
             templateInput.put(BAR_CHART_HEIGHT, barChartHeight);
             templateInput.put(BAR_CHART_WIDTH, barChartWidth);

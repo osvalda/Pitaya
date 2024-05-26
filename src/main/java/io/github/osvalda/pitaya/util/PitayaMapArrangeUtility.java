@@ -47,9 +47,9 @@ public class PitayaMapArrangeUtility {
         Map<String, AreaWiseCoverageObject> areaWiseCoverages = new HashMap<>();
         coverages.values().forEach(endpoint -> {
             if (areaWiseCoverages.containsKey(endpoint.getArea())) {
-                areaWiseCoverages.get(endpoint.getArea()).increaseCoverage(endpoint.getTestCases().size());
+                areaWiseCoverages.get(endpoint.getArea()).increaseCoverage(endpoint.getTestCases().size(), endpoint.isIgnored());
             } else {
-                areaWiseCoverages.put(endpoint.getArea(), new AreaWiseCoverageObject(endpoint.getTestCases().size()));
+                areaWiseCoverages.put(endpoint.getArea(), new AreaWiseCoverageObject(endpoint.getTestCases().size(), endpoint.isIgnored()));
             }
         });
         return areaWiseCoverages;
@@ -62,6 +62,8 @@ public class PitayaMapArrangeUtility {
      * @return the number of endpoints with at least one corresponding test case
      */
     public static int countCoveredEndpoints(Map<String, CoverageObject> coverages) {
-        return Math.toIntExact(coverages.values().stream().filter(endpoint -> !endpoint.getTestCases().isEmpty()).count());
+        return Math.toIntExact(coverages.values().stream().filter(endpoint ->
+                        !endpoint.getTestCases().isEmpty() && !endpoint.isIgnored())
+                .count());
     }
 }
