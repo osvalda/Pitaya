@@ -19,6 +19,15 @@ public class ModelTests {
     }
 
     @Test
+    public void testAreaWiseEndpointObjectWithIgnoredInitialEndpoint() {
+        AreaWiseCoverageObject sut = new AreaWiseCoverageObject(0, true);
+        assertThat(sut.getAllEndpoints()).isEqualTo(1);
+        assertThat(sut.getCoveredEndpoints()).isZero();
+        assertThat(sut.getUncoveredEndpointNum()).isZero();
+        assertThat(sut.getIgnoredEndpoints()).isEqualTo(1);
+    }
+
+    @Test
     public void testAreaWiseEndpointObjectDefaultConstructor () {
         AreaWiseCoverageObject sut = new AreaWiseCoverageObject();
         assertThat(sut.getAllEndpoints()).isEqualTo(1);

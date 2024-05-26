@@ -25,7 +25,8 @@ public class AreaWiseCoverageObject {
         allEndpoints = 1;
         if(covered > 0) {
             this.coveredEndpoints = 1;
-        } if (ignored) {
+        }
+        if (ignored) {
             ignoredEndpoints += 1;
         }
     }
@@ -47,7 +48,8 @@ public class AreaWiseCoverageObject {
         allEndpoints += 1;
         if(covered > 0) {
             this.coveredEndpoints += 1;
-        } if (ignored) {
+        }
+        if (ignored) {
             ignoredEndpoints += 1;
         }
     }
