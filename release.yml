@@ -1,0 +1,25 @@
+changelog:
+  exclude:
+    labels:
+      - wontfix
+      - invalid
+      - test
+      - duplicate
+  categories:
+    - title: Breaking Changes 🔚
+      labels:
+        - breaking-change
+    - title: New Features 🎉
+      labels:
+        - feature
+        - enhancement
+        - request
+    - title: Documentation 📄
+      labels:
+        - documentation
+    - title: Bug fixes 🐞
+      labels:
+        - bug
+    - title: Other Changes
+      labels:
+        - "*"
