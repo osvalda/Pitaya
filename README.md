@@ -17,7 +17,7 @@ API coverage visualizer tool. Creates an easily readable html report based upon 
 <dependency>
     <groupId>io.github.osvalda</groupId>
     <artifactId>Pitaya</artifactId>
-    <version>1.2.1</version>
+    <version>1.2.2</version>
     <scope>test</scope>
 </dependency>
 ```
@@ -26,7 +26,7 @@ API coverage visualizer tool. Creates an easily readable html report based upon 
 
 ```Groovy
 dependencies {
-    testCompile("io.github.osvalda:Pitaya:1.2.1")
+    testCompile("io.github.osvalda:Pitaya:1.2.2")
 }
 ```
 
@@ -63,8 +63,6 @@ add the following properties to it:
 | ------ | ------ | ------ |
 | application.name | The name of your SUT | Yes | 
 | endpoint.list.input | The endpoint list file's relative path or Open API file URL| Yes |
-| bar.chart.width | The width of the Area-wise Endpoint Coverages chart| No |
-| bar.chart.height | The height of the Area-wise Endpoint Coverages chart| No |
 
 ### Test case modifications
 
@@ -98,26 +96,6 @@ public void yourTestMethod() {
     // ...
 }
 ```
-
-## Tools and Plugins
-The following tools are used across the project.
-
-| Name | Version |
-| ------ | ------ |
-| testng | 7.4.0 |
-| junit.jupiter | 5.8.1 |
-| junit.platform | 1.8.1 |
-| freemarker | 2.3.29 |
-| lombok |1.18.12|
-| assertj-core | 3.14.0 |
-| apache.commons | 3.8.1 |
-| commons-io | 2.6 |
-| guava | 11.0.2 |
-| slf4j | 1.7.30 |
-| logback | 1.2.3 |
-| jmockit | 1.41 |
-| mockito | 2.15.0 |
-| swagger-parser-v3 | 2.0.21 |
 
 ## Preview
 
