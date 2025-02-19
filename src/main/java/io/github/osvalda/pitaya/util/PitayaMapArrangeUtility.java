@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @UtilityClass
 public class PitayaMapArrangeUtility {
@@ -65,5 +66,56 @@ public class PitayaMapArrangeUtility {
         return Math.toIntExact(coverages.values().stream().filter(endpoint ->
                         !endpoint.getTestCases().isEmpty() && !endpoint.isIgnored())
                 .count());
+    }
+
+    /**
+     * Calculates the average coverage by area
+     *
+     * @param areaWise the area based coverage results
+     * @return average coverage percentage by area
+     */
+    public static int calculateAverageCoveragePercentage(Map<String, AreaWiseCoverageObject> areaWise) {
+        return (int)Math.round(areaWise.values()
+                .stream()
+                .collect(Collectors.summarizingDouble(act -> ((double) act.getCoveredEndpoints() / act.getAllEndpointsWithoutIgnored()) * 100d))
+                .getAverage());
+    }
+
+    /**
+     * Counts the fully covered areas. Fully covered means that all the belonging endpoints are individually covered.
+     *
+     * @param coverages the initial coverage map
+     * @return the number of areas with full coverage
+     */
+    public static int[] countCoveredAreas(Map<String, CoverageObject> coverages) {
+        Map<String, List<CoverageObject>> areaWise = arrangeEndpointsByAreas(coverages);
+        int[] resultArray = {0, 0, 0};
+
+        areaWise.keySet().forEach(actAreaName -> {
+            resultArray[processAreaList(areaWise.get(actAreaName))] += 1;
+        });
+
+        return resultArray;
+    }
+
+    /*
+        0 - not covered at all
+        1 - at least one endpoint is covered but not all
+        2 - all endpoints are covered
+     */
+    private int processAreaList(List<CoverageObject> endpoints) {
+        int result = 0;
+
+        for (CoverageObject act : endpoints) {
+            if (!act.getTestCases().isEmpty()) {
+                result = 2;
+            } else {
+                if (result == 2) {
+                    return 1;
+                }
+            }
+        }
+
+        return result;
     }
 }

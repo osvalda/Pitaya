@@ -21,12 +21,15 @@ public abstract class CoverageReporter {
     protected static final String ENDPOINT_COVERAGE = "endpointCoverage";
     protected static final String ALL_ENDPOINTS_NUMBER = "allEndpointsNumber";
     protected static final String COVERED_ENDPOINTS_NUMBER = "coveredEndpointsNumber";
+    protected static final String IGNORED_NUMBER = "ignoredEndpointNumber";
     protected static final String AREA_NUMBER = "areaNumber";
+    protected static final String COVERED_AREAS_NUMBER = "coveredAreasNumber";
+    protected static final String MISSED_AREAS_NUMBER = "missedAreaNum";
+    protected static final String PART_COVERED_AREAS_NUMBER = "partCoveredAreasNumber";
     protected static final String CURRENT_DATE_AND_TIME = "currentDateAndTime";
     protected static final String APP_NAME = "appName";
-    protected static final String BAR_CHART_HEIGHT = "barChartHeight";
-    protected static final String BAR_CHART_WIDTH = "barChartWidth";
-    protected static final String IGNORED_NUMBER = "ignoredEndpointNumber";
+    protected static final String TEST_CASE_NUMBER = "testCaseNum";
+    protected static final String AVERAGE_COVERAGE_PERCENTAGE = "averageCoveragePercentage";
 
     protected void saveReportResult(Map<String, Object> templateInput) {
         try {

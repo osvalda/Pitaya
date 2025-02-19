@@ -2,6 +2,7 @@ package io.github.osvalda.pitaya;
 
 import io.github.osvalda.pitaya.annotation.TestCaseSupplementary;
 import io.github.osvalda.pitaya.endpointlist.EndpointList;
+import io.github.osvalda.pitaya.models.AreaWiseCoverageObject;
 import io.github.osvalda.pitaya.models.CoverageObject;
 import io.github.osvalda.pitaya.util.PitayaMapArrangeUtility;
 import io.github.osvalda.pitaya.util.PitayaPropertyKeys;
@@ -17,7 +18,6 @@ import java.util.*;
 import java.util.stream.Stream;
 
 import static io.github.osvalda.pitaya.endpointlist.EndpointListProcessorFactory.createEndpointListProcessor;
-import static io.github.osvalda.pitaya.util.PitayaMapArrangeUtility.countCoveredEndpoints;
 
 /**
  * API coverage TestNG reporter. Collects all the covered endpoints from the suite
@@ -34,15 +34,12 @@ public class PitayaCoverageReporter extends CoverageReporter implements IReporte
 
     /**
      * Generate an API coverage report for the given suites.
-     *
      * The created file is PitayaReport.html
      */
     @Override
     public void generateReport(List<XmlSuite> xmlSuites, List<ISuite> suites, String outputDirectory) {
         String appName = PropertiesUtility.getStringProperty(PitayaPropertyKeys.APPLICATION_NAME_PROPERTY, true);
         String endpointList = PropertiesUtility.getStringProperty(PitayaPropertyKeys.ENDPOINT_LIST_PROPERTY, true);
-        String barChartWidth = PropertiesUtility.getStringProperty(PitayaPropertyKeys.BAR_CHART_WIDTH, false);
-        String barChartHeight = PropertiesUtility.getStringProperty(PitayaPropertyKeys.BAR_CHART_HEIGHT, false);
         String dateAndTime = LocalDateTime.now().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM));
 
         EndpointList listProcessor = createEndpointListProcessor(endpointList);
@@ -50,19 +47,23 @@ public class PitayaCoverageReporter extends CoverageReporter implements IReporte
 
         createTheEndpointTableInput(suites);
 
+        Map<String, AreaWiseCoverageObject> areaWiseEndpoints = PitayaMapArrangeUtility.collectAreaWiseEndpointDetails(coverages);
+        int[] areaCoverages = PitayaMapArrangeUtility.countCoveredAreas(coverages);
+
         Map<String, Object> templateInput = new HashMap<>();
-        templateInput.put(AREA_WISE_ENDPOINTS, PitayaMapArrangeUtility.collectAreaWiseEndpointDetails(coverages));
+        templateInput.put(AREA_WISE_ENDPOINTS, areaWiseEndpoints);
+        templateInput.put(AVERAGE_COVERAGE_PERCENTAGE, PitayaMapArrangeUtility.calculateAverageCoveragePercentage(areaWiseEndpoints));
         templateInput.put(ENDPOINT_COVERAGE, PitayaMapArrangeUtility.arrangeEndpointsByAreas(coverages));
         templateInput.put(ALL_ENDPOINTS_NUMBER, coverages.keySet().size());
         templateInput.put(IGNORED_NUMBER, coverages.values().stream().filter(CoverageObject::isIgnored).count());
-        templateInput.put(COVERED_ENDPOINTS_NUMBER, countCoveredEndpoints(coverages));
+        templateInput.put(COVERED_ENDPOINTS_NUMBER, PitayaMapArrangeUtility.countCoveredEndpoints(coverages));
         templateInput.put(AREA_NUMBER, PitayaMapArrangeUtility.arrangeEndpointsByAreas(coverages).keySet().size());
+        templateInput.put(MISSED_AREAS_NUMBER, areaCoverages[0]);
+        templateInput.put(PART_COVERED_AREAS_NUMBER, areaCoverages[1]);
+        templateInput.put(COVERED_AREAS_NUMBER, areaCoverages[2]);
         templateInput.put(CURRENT_DATE_AND_TIME, dateAndTime);
         templateInput.put(APP_NAME, appName);
-        if(!barChartHeight.isEmpty() && !barChartWidth.isEmpty()) {
-            templateInput.put(BAR_CHART_HEIGHT, barChartHeight);
-            templateInput.put(BAR_CHART_WIDTH, barChartWidth);
-        }
+        templateInput.put(TEST_CASE_NUMBER, coverages.values().stream().map(CoverageObject::getTestCases).mapToInt(List::size).sum());
 
         saveReportResult(templateInput);
     }

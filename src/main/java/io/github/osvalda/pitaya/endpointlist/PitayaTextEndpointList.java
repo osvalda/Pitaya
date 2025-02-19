@@ -26,7 +26,7 @@ public class PitayaTextEndpointList implements EndpointList {
             }
             FileUtils.readLines(file, StandardCharsets.UTF_8).forEach(fileLine -> {
                 boolean ignored = false;
-                if(!fileLine.isEmpty()) {
+                if (!fileLine.isEmpty()) {
                     fileLine = StringUtils.strip(fileLine);
                     if (fileLine.startsWith("#")) {
                         return;
@@ -36,7 +36,7 @@ public class PitayaTextEndpointList implements EndpointList {
                         ignored = true;
                     }
                     String[] endpointLine = StringUtils.splitByWholeSeparator(fileLine, ", ");
-                    if(endpointLine.length == 2) {
+                    if (endpointLine.length == 2) {
                         endpoints.put(endpointLine[0], new CoverageObject(endpointLine[1], endpointLine[0], ignored));
                     }
                 }

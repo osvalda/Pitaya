@@ -60,4 +60,11 @@ public class AreaWiseCoverageObject {
     public int getUncoveredEndpointNum() {
         return allEndpoints - coveredEndpoints - ignoredEndpoints;
     }
+
+    /**
+     * Returns the number of all endpoints without the ignored
+     */
+    public int getAllEndpointsWithoutIgnored() {
+        return allEndpoints - ignoredEndpoints;
+    }
 }
