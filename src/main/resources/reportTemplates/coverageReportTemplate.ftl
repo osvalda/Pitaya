@@ -396,7 +396,6 @@ body {
     function menuBarClick(menuItem) {
       let charts = document.getElementById("charts");
       let table = document.getElementById("table");
-      let stat1 = document.getElementById("stat1");
       if (menuItem == "table") {
           if (table != null && charts != null) {
             charts.style.display = "none";
@@ -414,6 +413,7 @@ body {
             document.getElementById("homeItem").style.color = '#f1f1f1';
           }
       }
+      window.scrollTo(0, 0);
     }
 </script>
 
@@ -427,97 +427,99 @@ body {
 	</nav>
 
 	<div id="statiticholder" class="row">
-                <div class="col-md-auto stat-container card rounded-0 border-0">
-					<div class="card-body" style="align-content: center;">
-						<div class="app-name card-title">${appName}</div>
-						<div class="card-text">API Test Coverage<br>${currentDateAndTime}</div>
-					</div>
-				</div>
+        <div class="col-md-auto stat-container card rounded-0 border-0">
+		    <div class="card-body" style="align-content: center;">
+			    <div class="app-name card-title">${appName}</div>
+			    <div class="card-text">API Test Coverage<br>${currentDateAndTime}</div>
+			</div>
+		</div>
 
-				<div class="col-md-auto stat-container card rounded-0 border-0">
-					<div class="card-body">
-						<div class="row">
-							<div class="main-stat-desc card-title col">Number of Test Cases</div>
-						</div>
-						<div class="row">
-							<div class="main-stat-num col">${testCaseNum}</div>
-							<div class="main-stat-icon col">🧪</div>
-						</div>
-					</div>
+		<div class="col-md-auto stat-container card rounded-0 border-0">
+			<div class="card-body">
+				<div class="row">
+					<div class="main-stat-desc card-title col">Number of Test Cases</div>
 				</div>
+				<div class="row">
+					<div class="main-stat-num col">${testCaseNum}</div>
+					<div class="main-stat-icon col">🧪</div>
+				</div>
+			</div>
+		</div>
 
-				<div class="col-md-auto stat-container card rounded-0 border-0">
-					<div class="card-body">
-						<div class="row">
-							<div class="main-stat-desc card-title col">Total Endpoints</div>
-						</div>
-						<div class="row">
-							<div class="main-stat-num col">${allEndpointsNumber}</div>
-							<div class="main-stat-icon col">🌩️</div>
-						</div>
-					</div>
+		<div class="col-md-auto stat-container card rounded-0 border-0">
+			<div class="card-body">
+				<div class="row">
+					<div class="main-stat-desc card-title col">Total Endpoints</div>
 				</div>
+				<div class="row">
+					<div class="main-stat-num col">${allEndpointsNumber}</div>
+					<div class="main-stat-icon col">🌩️</div>
+				</div>
+			</div>
+		</div>
 
-				<div class="col-md-auto stat-container card rounded-0 border-0">
-					<div class="card-body">
-						<div class="row">
-							<div class="main-stat-desc card-title col">Available Areas</div>
-						</div>
-						<div class="row">
-							<div class="main-stat-num col">${areaNumber}</div>
-							<div class="main-stat-icon col">🗺️️</div>
-						</div>
-					</div>
+		<div class="col-md-auto stat-container card rounded-0 border-0">
+			<div class="card-body">
+				<div class="row">
+					<div class="main-stat-desc card-title col">Available Areas</div>
 				</div>
+				<div class="row">
+					<div class="main-stat-num col">${areaNumber}</div>
+					<div class="main-stat-icon col">🗺️️</div>
+				</div>
+			</div>
+		</div>
 
-				<div class="col-md-auto stat-container card rounded-0 border-0">
-					<div class="card-body">
-						<div class="row">
-							<div class="main-stat-desc card-title col">Avg. Coverage per Area</div>
-						</div>
-						<div class="row">
-							<div class="main-stat-num col">${averageCoveragePercentage}%</div>
-							<div class="main-stat-icon col">📈</div>
-						</div>
-					</div>
+		<div class="col-md-auto stat-container card rounded-0 border-0">
+			<div class="card-body">
+				<div class="row">
+					<div class="main-stat-desc card-title col">Avg. Coverage per Area</div>
 				</div>
+				<div class="row">
+					<div class="main-stat-num col">${averageCoveragePercentage}%</div>
+					<div class="main-stat-icon col">📈</div>
+				</div>
+			</div>
+		</div>
 
 	</div>
 
 		<div id="charts" class="row">
 
-    		<div class="col-md-auto stat-container card rounded-0 border-0">
-    			<div class="card-body">
-    				<h4 class="card-title">Area-wise Endpoint Coverages</h4>
-    				<div id="chart_div" style="width: 830px; height: ${barHeight?c}px;">Endpoint List</div>
-    			</div>
-    		</div>
+            <div class="col-md-auto" style="padding-right: 0px; padding-left: 0px">
+                <div class="col-md-auto stat-container card rounded-0 border-0">
+                    <div class="card-body">
+                        <h4 class="card-title">Area-wise Endpoint Coverages</h4>
+                        <div id="chart_div" style="width: 830px; height: ${barHeight?c}px;">Endpoint List</div>
+                    </div>
+                </div>
+            </div>
 
-		<div class="col-md-auto" style="padding-right: 0px; padding-left: 0px">
-    		<div class="col-md-auto stat-container card rounded-0 border-0">
-    			<div class="card-body">
-    				<h4 class="card-title">Endpoint Coverage</h4>
-    				<div id="donutchart" >
-    					<div id="piechart"></div>
-    					<div id="labelOverlay">
-    						<p class="used-size">${coveragePercent?string["##0.0"]}%</p>
-    					</div>
-    				</div>
-    			</div>
-    		</div>
+            <div class="col-md-auto" style="padding-right: 0px; padding-left: 0px">
+                <div class="col-md-auto stat-container card rounded-0 border-0">
+                    <div class="card-body">
+                        <h4 class="card-title">Endpoint Coverage</h4>
+                        <div id="donutchart" >
+                            <div id="piechart"></div>
+                            <div id="labelOverlay">
+                                <p class="used-size">${coveragePercent?string["##0.0"]}%</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-    		<div class="col-md-auto stat-container card rounded-0 border-0">
-    			<div class="card-body">
-    				<h4 class="card-title">Area Coverage</h4>
-    				<div id="donutchart" >
-    					<div id="areaPieChart"></div>
-    					<div id="labelOverlay">
-    						<p class="used-size">${areaCoveragePercent?string["##0.0"]}%</p>
-    					</div>
-    				</div>
-    			</div>
-    		</div>
-    	</div>
+                <div class="col-md-auto stat-container card rounded-0 border-0">
+                    <div class="card-body">
+                        <h4 class="card-title">Area Coverage</h4>
+                        <div id="donutchart" >
+                            <div id="areaPieChart"></div>
+                            <div id="labelOverlay">
+                                <p class="used-size">${areaCoveragePercent?string["##0.0"]}%</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
     	</div>
 
