@@ -77,7 +77,7 @@ public class PitayaMapArrangeUtility {
     public static int calculateAverageCoveragePercentage(Map<String, AreaWiseCoverageObject> areaWise) {
         return (int)Math.round(areaWise.values()
                 .stream()
-                .collect(Collectors.summarizingDouble(act -> ((double) act.getCoveredEndpoints() / act.getAllEndpointsWithoutIgnored()) * 100d))
+                .collect(Collectors.summarizingDouble(act -> ((double) act.getCoveredEndpoints() / act.getAllEndpoints()) * 100d))
                 .getAverage());
     }
 
@@ -85,7 +85,7 @@ public class PitayaMapArrangeUtility {
      * Counts the fully covered areas. Fully covered means that all the belonging endpoints are individually covered.
      *
      * @param coverages the initial coverage map
-     * @return the number of areas with full coverage
+     * @return the array of areas with coverages, missed, partially, fully
      */
     public static int[] countCoveredAreas(Map<String, CoverageObject> coverages) {
         Map<String, List<CoverageObject>> areaWise = arrangeEndpointsByAreas(coverages);
@@ -102,20 +102,16 @@ public class PitayaMapArrangeUtility {
         0 - not covered at all
         1 - at least one endpoint is covered but not all
         2 - all endpoints are covered
-     */
+    */
     private int processAreaList(List<CoverageObject> endpoints) {
-        int result = 0;
+        long without = endpoints.stream().filter(act -> act.getTestCases().isEmpty()).count();
 
-        for (CoverageObject act : endpoints) {
-            if (!act.getTestCases().isEmpty()) {
-                result = 2;
+        if(without > 0) {
+            if (without == endpoints.size()) {
+                return 0;
             } else {
-                if (result == 2) {
-                    return 1;
-                }
+                return 1;
             }
-        }
-
-        return result;
+        } return 2;
     }
 }
