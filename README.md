@@ -99,11 +99,11 @@ public void yourTestMethod() {
 
 ## Preview
 
-<a href="https://i.ibb.co/7S8xDsJ/pitaya-main.jpg" target="_blank">
-    <img width="425" height="247" alt="charts" src="https://i.ibb.co/7S8xDsJ/pitaya-main.jpg">
+<a href="https://i.ibb.co/dwMgx1H7/dash.png" target="_blank">
+    <img width="425" height="217" alt="charts" src="https://i.ibb.co/dwMgx1H7/dash.png">
 </a>
-<a href="https://i.ibb.co/tpDFbKV/pitaya-list.jpg" target="_blank">
-    <img width="425" height="247" alt="endpoint list" src="https://i.ibb.co/tpDFbKV/pitaya-list.jpg">
+<a href="https://i.ibb.co/WNY5WqzQ/endpoint-List.png" target="_blank">
+    <img width="425" height="217" alt="endpoint list" src="https://i.ibb.co/WNY5WqzQ/endpoint-List.png">
 </a>
 
 ## CI Issues and solutions
