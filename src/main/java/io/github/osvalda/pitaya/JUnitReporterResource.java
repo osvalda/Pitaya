@@ -1,5 +1,6 @@
 package io.github.osvalda.pitaya;
 
+import io.github.osvalda.pitaya.models.AreaWiseCoverageObject;
 import io.github.osvalda.pitaya.models.CoverageObject;
 import io.github.osvalda.pitaya.util.PitayaMapArrangeUtility;
 import io.github.osvalda.pitaya.util.PitayaPropertyKeys;
@@ -38,25 +39,27 @@ public class JUnitReporterResource extends CoverageReporter implements Extension
     @Override
     public void close() {
         String appName = PropertiesUtility.getStringProperty(PitayaPropertyKeys.APPLICATION_NAME_PROPERTY, true);
-        String barChartWidth = PropertiesUtility.getStringProperty(PitayaPropertyKeys.BAR_CHART_WIDTH, false);
-        String barChartHeight = PropertiesUtility.getStringProperty(PitayaPropertyKeys.BAR_CHART_HEIGHT, false);
         String dateAndTime = LocalDateTime.now().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM));
 
         Map<String, Object> templateInput = new HashMap<>();
         Map<String, List<CoverageObject>> areaWiseEndpointMap = PitayaMapArrangeUtility.arrangeEndpointsByAreas(coverages);
 
-        templateInput.put(AREA_WISE_ENDPOINTS, PitayaMapArrangeUtility.collectAreaWiseEndpointDetails(coverages));
+        Map<String, AreaWiseCoverageObject> areaWiseEndpoints = PitayaMapArrangeUtility.collectAreaWiseEndpointDetails(coverages);
+        int[] areaCoverages = PitayaMapArrangeUtility.countCoveredAreas(coverages);
+
+        templateInput.put(AREA_WISE_ENDPOINTS, areaWiseEndpoints);
+        templateInput.put(AVERAGE_COVERAGE_PERCENTAGE, PitayaMapArrangeUtility.calculateAverageCoveragePercentage(areaWiseEndpoints));
         templateInput.put(ENDPOINT_COVERAGE, areaWiseEndpointMap);
         templateInput.put(ALL_ENDPOINTS_NUMBER, coverages.keySet().size());
         templateInput.put(COVERED_ENDPOINTS_NUMBER, PitayaMapArrangeUtility.countCoveredEndpoints(coverages));
         templateInput.put(AREA_NUMBER, areaWiseEndpointMap.keySet().size());
+        templateInput.put(MISSED_AREAS_NUMBER, areaCoverages[0]);
+        templateInput.put(PART_COVERED_AREAS_NUMBER, areaCoverages[1]);
+        templateInput.put(COVERED_AREAS_NUMBER, areaCoverages[2]);
         templateInput.put(CURRENT_DATE_AND_TIME, dateAndTime);
         templateInput.put(APP_NAME, appName);
         templateInput.put(IGNORED_NUMBER, coverages.values().stream().filter(CoverageObject::isIgnored).count());
-        if(!barChartHeight.isEmpty() && !barChartWidth.isEmpty()) {
-            templateInput.put(BAR_CHART_HEIGHT, barChartHeight);
-            templateInput.put(BAR_CHART_WIDTH, barChartWidth);
-        }
+        templateInput.put(TEST_CASE_NUMBER, coverages.values().stream().map(CoverageObject::getTestCases).mapToInt(List::size).sum());
 
         saveReportResult(templateInput);
     }
